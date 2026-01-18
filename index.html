@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WET VST - Open Source Audio Plugins</title>
+    <meta name="description" content="Free, open source VST3 audio plugins for Windows. Built with pure Steinberg VST3 SDK. No frameworks, no bloat.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-card: #141414;
+            --bg-card-hover: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --border: #2a2a2a;
+            --green: #22c55e;
+            --yellow: #eab308;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-left: 32px;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 80px 0 60px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+
+        .hero-badges {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .badge svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Plugins Section */
+        .plugins {
+            padding: 60px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+        }
+
+        .plugin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .plugin-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px;
+            transition: all 0.2s;
+        }
+
+        .plugin-card:hover {
+            background: var(--bg-card-hover);
+            border-color: #3a3a3a;
+        }
+
+        .plugin-card.available {
+            border-color: var(--green);
+        }
+
+        .plugin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .plugin-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .plugin-status {
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: 100px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .plugin-status.available {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--green);
+        }
+
+        .plugin-status.coming {
+            background: rgba(234, 179, 8, 0.15);
+            color: var(--yellow);
+        }
+
+        .plugin-description {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            font-size: 0.95rem;
+        }
+
+        .plugin-features {
+            list-style: none;
+            margin-bottom: 24px;
+        }
+
+        .plugin-features li {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            padding: 4px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .plugin-features li::before {
+            content: ">";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        .plugin-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Philosophy Section */
+        .philosophy {
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+
+        .philosophy-item h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .philosophy-item p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Support Section */
+        .support {
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .support h2 {
+            font-size: 1.75rem;
+            margin-bottom: 12px;
+        }
+
+        .support p {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .coffee-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            background: #FFDD00;
+            color: #000;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .coffee-btn:hover {
+            background: #e6c700;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            padding: 32px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.1rem;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .plugin-card {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">WET<span>VST</span></a>
+                <nav>
+                    <a href="#plugins">Plugins</a>
+                    <a href="#philosophy">About</a>
+                    <a href="https://github.com/yonie" target="_blank">GitHub</a>
+                    <a href="#support">Support</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Open Source Audio Plugins</h1>
+                <p class="subtitle">Free VST3 plugins for Windows. Built with pure Steinberg SDK. No frameworks, no bloat, no secrets.</p>
+                <div class="hero-badges">
+                    <span class="badge">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                        100% Open Source
+                    </span>
+                    <span class="badge">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                        Windows VST3
+                    </span>
+                    <span class="badge">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                        Pure VST3 SDK
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <section class="plugins" id="plugins">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Plugins</h2>
+                    <p>Professional quality, completely free, fully open source</p>
+                </div>
+
+                <div class="plugin-grid">
+                    <!-- WetDelay - Available -->
+                    <div class="plugin-card available">
+                        <div class="plugin-header">
+                            <h3 class="plugin-name">WetDelay</h3>
+                            <span class="plugin-status available">Available</span>
+                        </div>
+                        <p class="plugin-description">Classic 80s-style stereo delay with warm analog character. Perfect for adding depth and space to any track.</p>
+                        <ul class="plugin-features">
+                            <li>Stereo ping-pong delay</li>
+                            <li>Tempo sync with note divisions</li>
+                            <li>Low-pass and high-pass filters</li>
+                            <li>Smooth modulation controls</li>
+                        </ul>
+                        <div class="plugin-actions">
+                            <a href="https://github.com/yonie/wetdelay/releases" class="btn btn-primary">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                Download
+                            </a>
+                            <a href="https://github.com/yonie/wetdelay" class="btn btn-secondary">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                                Source
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- WetChorus - Coming Soon -->
+                    <div class="plugin-card">
+                        <div class="plugin-header">
+                            <h3 class="plugin-name">WetChorus</h3>
+                            <span class="plugin-status coming">Coming Soon</span>
+                        </div>
+                        <p class="plugin-description">Lush stereo chorus inspired by classic hardware units. From subtle shimmer to full ensemble.</p>
+                        <ul class="plugin-features">
+                            <li>Multiple chorus voices</li>
+                            <li>Variable modulation depth</li>
+                            <li>Stereo width control</li>
+                            <li>Vintage and modern modes</li>
+                        </ul>
+                    </div>
+
+                    <!-- WetEQ - Coming Soon -->
+                    <div class="plugin-card">
+                        <div class="plugin-header">
+                            <h3 class="plugin-name">WetEQ</h3>
+                            <span class="plugin-status coming">Coming Soon</span>
+                        </div>
+                        <p class="plugin-description">Musical parametric equalizer with smooth, analog-style curves and intuitive controls.</p>
+                        <ul class="plugin-features">
+                            <li>4-band parametric EQ</li>
+                            <li>High and low shelf filters</li>
+                            <li>Real-time spectrum analyzer</li>
+                            <li>Precise frequency control</li>
+                        </ul>
+                    </div>
+
+                    <!-- WetPreamp - Coming Soon -->
+                    <div class="plugin-card">
+                        <div class="plugin-header">
+                            <h3 class="plugin-name">WetPreamp</h3>
+                            <span class="plugin-status coming">Coming Soon</span>
+                        </div>
+                        <p class="plugin-description">Warm tube-style preamp with harmonic saturation. Add body and presence to any source.</p>
+                        <ul class="plugin-features">
+                            <li>Tube saturation modeling</li>
+                            <li>Input and output gain</li>
+                            <li>Tone shaping controls</li>
+                            <li>Clean to driven range</li>
+                        </ul>
+                    </div>
+
+                    <!-- WetReverb - Coming Soon -->
+                    <div class="plugin-card">
+                        <div class="plugin-header">
+                            <h3 class="plugin-name">WetReverb</h3>
+                            <span class="plugin-status coming">Coming Soon</span>
+                        </div>
+                        <p class="plugin-description">Algorithmic reverb with multiple room types. From tight ambience to vast halls.</p>
+                        <ul class="plugin-features">
+                            <li>Multiple room algorithms</li>
+                            <li>Pre-delay and decay control</li>
+                            <li>Damping and diffusion</li>
+                            <li>Stereo width adjustment</li>
+                        </ul>
+                    </div>
+
+                    <!-- WetCompressor - Coming Soon -->
+                    <div class="plugin-card">
+                        <div class="plugin-header">
+                            <h3 class="plugin-name">WetCompressor</h3>
+                            <span class="plugin-status coming">Coming Soon</span>
+                        </div>
+                        <p class="plugin-description">Versatile dynamics processor with VCA and optical modes. Transparent control or musical pumping.</p>
+                        <ul class="plugin-features">
+                            <li>VCA and optical modes</li>
+                            <li>Variable knee control</li>
+                            <li>Sidechain filtering</li>
+                            <li>Auto makeup gain</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="philosophy" id="philosophy">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Why WET VST?</h2>
+                    <p>A different approach to plugin development</p>
+                </div>
+
+                <div class="philosophy-grid">
+                    <div class="philosophy-item">
+                        <h3>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                            Fully Open Source
+                        </h3>
+                        <p>Most free plugins are closed-source binaries. WET plugins give you the complete source code under a permissive license. Learn, modify, contribute.</p>
+                    </div>
+
+                    <div class="philosophy-item">
+                        <h3>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                            Pure VST3 SDK
+                        </h3>
+                        <p>Built directly on the official Steinberg VST3 SDK. No JUCE, no third-party frameworks. Clean, minimal, and easy to understand.</p>
+                    </div>
+
+                    <div class="philosophy-item">
+                        <h3>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                            Complete Documentation
+                        </h3>
+                        <p>Every plugin includes full build instructions using only free tools: Visual Studio Build Tools, CMake, and Git. No paid licenses needed.</p>
+                    </div>
+
+                    <div class="philosophy-item">
+                        <h3>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                            Windows Focused
+                        </h3>
+                        <p>Deliberately targeting the Windows ecosystem where most bedroom producers work with DAWs like Reaper and FL Studio.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="support" id="support">
+            <div class="container">
+                <h2>Support Development</h2>
+                <p>WET plugins are free forever. If they help your music, consider buying me a coffee to support continued development.</p>
+                <a href="https://buymeacoffee.com/yonie" class="coffee-btn" target="_blank">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 5h-2V5h2v3zM4 19h16v2H4z"/></svg>
+                    Buy Me a Coffee
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>WET VST by <a href="https://github.com/yonie">Ronald Klarenbeek</a> | <a href="mailto:contact@wetvst.com">contact@wetvst.com</a></p>
+        </div>
+    </footer>
+</body>
+</html>
