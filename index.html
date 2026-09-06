@@ -368,7 +368,46 @@
                 padding: 24px;
             }
         }
-    </style>
+    
+        /* Release-notice signup. Consent-based and release-only: see privacy.html.
+           Deliberately plain - a static form posting to the list provider, no
+           script, no embed iframe, nothing to load. */
+        .notify { padding: 5rem 0; border-top: 1px solid var(--border); }
+        .notify h2 { font-size: 1.75rem; margin-bottom: 0.75rem; }
+        .notify > .container > p { color: var(--text-secondary); max-width: 40rem; }
+        .notify-form { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1.5rem 0 0; max-width: 34rem; }
+        .notify-form input[type="email"] {
+            flex: 1 1 16rem;
+            padding: 0.75rem 1rem;
+            font: inherit;
+            color: var(--text-primary);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+        }
+        .notify-form input[type="email"]:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        .notify-form button { cursor: pointer; border: none; }
+        .notify-consent {
+            display: flex;
+            gap: 0.6rem;
+            align-items: flex-start;
+            margin-top: 1rem;
+            max-width: 40rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .notify-consent input { margin-top: 0.25rem; flex-shrink: 0; }
+        .notify-note { font-size: 0.8rem; opacity: 0.6; margin-top: 1rem; }
+        .notify-hp { position: absolute; left: -9999px; }
+        .sr-only {
+            position: absolute; width: 1px; height: 1px;
+            padding: 0; margin: -1px; overflow: hidden;
+            clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+        }
+</style>
 </head>
 <body>
     <header>
@@ -481,7 +520,7 @@
                         <img src="img/weteq.png" alt="WetEQ Plugin Screenshot" class="plugin-screenshot">
                         <ul class="plugin-features">
                             <li>4 bands (LF shelf, LMF bell, HMF bell, HF shelf)</li>
-                            <li>HPF, LPF and input GAIN, 9 stepped positions per control</li>
+                            <li>HPF, LPF and input GAIN, 17 stepped positions per control - hold Shift for four times finer</li>
                             <li>Host sample rate, no downsampling</li>
                             <li>Real-time L/R input and output LED metering</li>
                         </ul>
@@ -529,14 +568,52 @@
                             <h3 class="plugin-name">WetChorus</h3>
                             <span class="plugin-status coming">Coming Soon</span>
                         </div>
-                        <p class="plugin-description">Authentic analog-style stereo chorus. Antiphase modulation with classic combo-amp voicing.</p>
+                        <p class="plugin-description">Authentic 1970s combo-amp chorus and vibrato, on its own. Modelled bucket-brigade delay line with its compander, clock and noise floor.</p>
                         <ul class="plugin-features">
-                            <li>Antiphase L/R modulation</li>
-                            <li>Fixed rate and depth</li>
-                            <li>Vintage combo-amp voicing</li>
+                            <li>Its 2-position VIB/CHORUS switch, made continuous (19 usable positions)</li>
+                            <li>Stepped SPEED, DEPTH and MODE, hold Shift for four times finer</li>
+                            <li>Host sample rate, no downsampling</li>
+                            <li>Real-time input and output LED metering</li>
+                        </ul>
+                    </div>
+
+                    <!-- WetWeld - Coming Soon -->
+                    <div class="plugin-card">
+                        <div class="plugin-header">
+                            <h3 class="plugin-name">WetWeld</h3>
+                            <span class="plugin-status coming">Coming Soon</span>
+                        </div>
+                        <p class="plugin-description">Authentic desk-style mix-bus chain, welded into one window. Per-stage saturation, noise and channel crosstalk.</p>
+                        <ul class="plugin-features">
+                            <li>8 stages in 1 fixed chain (input GAIN, HPF, COLOR, LF shelf, HF shelf, COMPRESS, WIDEN, output GAIN)</li>
+                            <li>10 stepped controls, no routing, no menus, no presets</li>
+                            <li>Host sample rate, no downsampling</li>
+                            <li>Real-time input, gain reduction and output LED metering</li>
                         </ul>
                     </div>
                 </div>
+            </div>
+        </section>
+
+
+        <!-- Release notices: consent only, release announcements only. -->
+        <section class="notify" id="notify">
+            <div class="container">
+                <h2>Keep me up to date</h2>
+                <p>WetChorus and WetWeld are on the way. Leave an address and you will hear when a WET plugin is released or updated. That is the only thing this list is ever used for.</p>
+                <form class="notify-form" action="" method="post">
+                    <div class="notify-hp" aria-hidden="true">
+                        <label>Leave this blank<input type="text" name="hp" tabindex="-1" autocomplete="off"></label>
+                    </div>
+                    <label class="sr-only" for="email_address">Email address</label>
+                    <input id="email_address" name="email_address" type="email" required placeholder="you@example.com" autocomplete="email">
+                    <button type="submit" class="btn btn-primary" disabled>Notify me</button>
+                    <label class="notify-consent">
+                        <input type="checkbox" name="consent" required>
+                        <span>Yes, email me when a new WET plugin is released. I can unsubscribe from any message, and I have read the <a href="privacy.html">privacy statement</a>.</span>
+                    </label>
+                </form>
+                <p class="notify-note">Confirmed opt-in - you will get one email asking you to confirm, and nothing at all if you ignore it. No newsletters, no offers, no open tracking, and the list is never shared.</p>
             </div>
         </section>
 
@@ -597,7 +674,7 @@
 
     <footer>
         <div class="container">
-            <p>WET VST by <a href="https://github.com/yonie">Ronald Klarenbeek</a> | <a href="mailto:contact@wetvst.com">contact@wetvst.com</a></p>
+            <p>WET VST by <a href="https://github.com/yonie">Ronald Klarenbeek</a> | <a href="mailto:contact@wetvst.com">contact@wetvst.com</a> | <a href="privacy.html">Privacy</a></p>
             <p style="font-size:0.8rem;opacity:0.55;margin-top:0.75rem;max-width:52rem">All product names, trademarks and registered trademarks are property of their respective owners, and are used here only to describe the kind of equipment these plugins were inspired by. No manufacturer has endorsed, sponsored or licensed anything in the WET line, and no third-party intellectual property is used in it.</p>
         </div>
     </footer>
