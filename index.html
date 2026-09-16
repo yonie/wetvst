@@ -294,6 +294,16 @@
             font-size: 0.95rem;
         }
 
+        /* Marks a link that leaves the site, so nobody is taken off it unannounced. */
+        .ext-icon {
+            width: 0.7em;
+            height: 0.7em;
+            margin-left: 0.35em;
+            vertical-align: baseline;
+            opacity: 0.7;
+        }
+        nav a:hover .ext-icon { opacity: 1; }
+
         /* Support Section */
         .support {
             padding: 60px 0;
@@ -417,8 +427,9 @@
                 <nav>
                     <a href="#plugins">Plugins</a>
                     <a href="#philosophy">About</a>
-                    <a href="https://github.com/yonie" target="_blank">GitHub</a>
-                    <a href="#support">Support</a>
+                    <a href="#notify">Stay informed</a>
+                    <a href="#support">Donate</a>
+                    <a href="https://github.com/yonie" target="_blank" rel="noopener">GitHub<svg class="ext-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
                 </nav>
             </div>
         </div>
@@ -570,7 +581,7 @@
                         </div>
                         <p class="plugin-description">Authentic 1970s combo-amp chorus and vibrato, on its own. Modelled bucket-brigade delay line with its compander, clock and noise floor.</p>
                         <ul class="plugin-features">
-                            <li>Its 2-position VIB/CHORUS switch, made continuous (19 usable positions)</li>
+                            <li>Its 2-position VIB/CHORUS switch, made continuous (19 positions)</li>
                             <li>Stepped SPEED, DEPTH and MODE, hold Shift for four times finer</li>
                             <li>Host sample rate, no downsampling</li>
                             <li>Real-time input and output LED metering</li>
@@ -586,7 +597,7 @@
                         <p class="plugin-description">Authentic desk-style mix-bus chain, welded into one window. Per-stage saturation, noise and channel crosstalk.</p>
                         <ul class="plugin-features">
                             <li>8 stages in 1 fixed chain (input GAIN, HPF, COLOR, LF shelf, HF shelf, COMPRESS, WIDEN, output GAIN)</li>
-                            <li>10 stepped controls, no routing, no menus, no presets</li>
+                            <li>10 stepped controls, hold Shift for four times finer</li>
                             <li>Host sample rate, no downsampling</li>
                             <li>Real-time input, gain reduction and output LED metering</li>
                         </ul>
@@ -596,26 +607,6 @@
         </section>
 
 
-        <!-- Release notices: consent only, release announcements only. -->
-        <section class="notify" id="notify">
-            <div class="container">
-                <h2>Keep me up to date</h2>
-                <p>WetChorus and WetWeld are on the way. Leave an address and you will hear when a WET plugin is released or updated. That is the only thing this list is ever used for.</p>
-                <form class="notify-form" action="" method="post">
-                    <div class="notify-hp" aria-hidden="true">
-                        <label>Leave this blank<input type="text" name="hp" tabindex="-1" autocomplete="off"></label>
-                    </div>
-                    <label class="sr-only" for="email_address">Email address</label>
-                    <input id="email_address" name="email_address" type="email" required placeholder="you@example.com" autocomplete="email">
-                    <button type="submit" class="btn btn-primary" disabled>Notify me</button>
-                    <label class="notify-consent">
-                        <input type="checkbox" name="consent" required>
-                        <span>Yes, email me when a new WET plugin is released. I can unsubscribe from any message, and I have read the <a href="privacy.html">privacy statement</a>.</span>
-                    </label>
-                </form>
-                <p class="notify-note">Confirmed opt-in - you will get one email asking you to confirm, and nothing at all if you ignore it. No newsletters, no offers, no open tracking, and the list is never shared.</p>
-            </div>
-        </section>
 
         <section class="philosophy" id="philosophy">
             <div class="container">
@@ -660,6 +651,32 @@
             </div>
         </section>
 
+        <!-- Release notices: consent only, release announcements only. -->
+        <section class="notify" id="notify">
+            <div class="container">
+                <h2>Stay informed</h2>
+                <p>WetChorus and WetWeld are on the way. Leave an address and you will hear when a WET plugin is released or updated.</p>
+                <!-- Posts straight to the list provider. Field names are theirs, not ours:
+                     EMAIL, the email_address_check honeypot (must stay empty) and locale.
+                     The consent box deliberately has no name attribute - it is required in the
+                     browser but never submitted, so the provider only ever receives the address. -->
+                <form class="notify-form" action="https://078f49d4.sibforms.com/serve/MUIFAFpb_yk6GBJ009b5eemmecfytE4QH0zczXF4R2uyGFkklb0noqWLgc6PPfDG39_G6l4ovvqIVhOQP4IjwHe4Qj6ToIyDsRmEfVg0U7ao7lahGLHtCpm6ECZxIFm-p4FqDNLjr98Zx9XpiIlSlBcTptqOciZKqN9IiI6zTeZwWSZqG-EgG2TVqLh-Fu_xsOt0UWi0l7KQBGnekQ==" method="post">
+                    <div class="notify-hp" aria-hidden="true">
+                        <label>Leave this blank<input type="text" name="email_address_check" tabindex="-1" autocomplete="off"></label>
+                    </div>
+                    <input type="hidden" name="locale" value="en">
+                    <label class="sr-only" for="email_address">Email address</label>
+                    <input id="email_address" name="EMAIL" type="email" required placeholder="you@example.com" autocomplete="email">
+                    <button type="submit" class="btn btn-primary">Notify me</button>
+                    <label class="notify-consent">
+                        <input type="checkbox" required>
+                        <span>Yes, email me when a WET plugin is released or updated. I can unsubscribe from any message, and I have read the <a href="privacy.html">privacy statement</a>.</span>
+                    </label>
+                </form>
+                <p class="notify-note">You get one email asking you to confirm. Ignore it and the address is not stored.</p>
+            </div>
+        </section>
+
         <section class="support" id="support">
             <div class="container">
                 <h2>Support Development</h2>
@@ -675,7 +692,7 @@
     <footer>
         <div class="container">
             <p>WET VST by <a href="https://github.com/yonie">Ronald Klarenbeek</a> | <a href="mailto:contact@wetvst.com">contact@wetvst.com</a> | <a href="privacy.html">Privacy</a></p>
-            <p style="font-size:0.8rem;opacity:0.55;margin-top:0.75rem;max-width:52rem">All product names, trademarks and registered trademarks are property of their respective owners, and are used here only to describe the kind of equipment these plugins were inspired by. No manufacturer has endorsed, sponsored or licensed anything in the WET line, and no third-party intellectual property is used in it.</p>
+            <p style="font-size:0.8rem;opacity:0.55;margin:0.75rem auto 0;max-width:52rem">All product names, trademarks and registered trademarks are property of their respective owners, and are used here only to describe the kind of equipment these plugins were inspired by. No manufacturer has endorsed, sponsored or licensed anything in the WET line, and no third-party intellectual property is used in it.</p>
         </div>
     </footer>
 </body>
