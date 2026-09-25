@@ -486,3 +486,8 @@ footer a:hover {
 .card.mini .card-body { padding: 14px 16px 16px; }
 .card.mini .card-body h3 { font-size: 1.05rem; }
 .card.mini .card-kind { margin-bottom: 0; }
+.card-line { color: var(--text-primary); font-size: 1rem; line-height: 1.5; margin-bottom: 14px; }
+.card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+.card-tags span { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-secondary); border: 1px solid var(--border); border-radius: 100px; padding: 3px 9px; }
+.card-tags .tag-free { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 50%, transparent); }
+.card-tags .tag-premium { color: #1a1400; background: var(--yellow); border-color: var(--yellow); }
