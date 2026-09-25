@@ -54,7 +54,6 @@
         <section class="pdp-closer" style="background: radial-gradient(ellipse 45% 70% at 18% 35%, color-mix(in srgb, #f59e0b 24%, transparent), transparent 70%), radial-gradient(ellipse 45% 70% at 62% 75%, color-mix(in srgb, #22c55e 24%, transparent), transparent 70%), radial-gradient(ellipse 45% 70% at 88% 25%, color-mix(in srgb, #9ca3af 24%, transparent), transparent 70%)">
             <div class="container">
                 <h2>Take a closer look</h2>
-                <p class="pdp-meta">Click a + to see what that control does.</p>
                 <div class="closer-stage">
                     <img src="/img/3d/wetcompressor.webp" alt="WetCompressor, rendered in 3D" loading="lazy">
                     <button class="spot" style="left: 19.83%; top: 61.25%" aria-label="Input"><span class="spot-card"><strong>Input</strong>The compression control: more input is more compression. There is no threshold knob.</span></button>
@@ -62,7 +61,7 @@
                     <button class="spot" style="left: 49.99%; top: 36.22%" aria-label="Gain reduction"><span class="spot-card"><strong>Gain reduction</strong>How much the gain cell is taking, down to 22 dB.</span></button>
                     <button class="spot left" style="left: 79.86%; top: 61.25%" aria-label="Output"><span class="spot-card"><strong>Output</strong>Makeup gain after the output stage, plus or minus 30 dB.</span></button>
                 </div>
-                <p class="closer-caption" aria-live="polite"><strong>Tap a +</strong>to see what that control does.</p>
+                <p class="closer-caption" aria-live="polite" hidden></p>
             </div>
         </section>
 
@@ -169,7 +168,7 @@
           close();
           if (!was) {
             s.classList.add("open"); s.setAttribute("aria-expanded", "true");
-            if (cap) cap.innerHTML = s.querySelector(".spot-card").innerHTML;
+            if (cap) { cap.innerHTML = s.querySelector(".spot-card").innerHTML; cap.hidden = false; }
           }
         });
       });

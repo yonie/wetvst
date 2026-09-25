@@ -54,7 +54,6 @@
         <section class="pdp-closer" style="background: radial-gradient(ellipse 45% 70% at 18% 35%, color-mix(in srgb, #d33a2c 24%, transparent), transparent 70%), radial-gradient(ellipse 45% 70% at 62% 75%, color-mix(in srgb, #4aa3df 24%, transparent), transparent 70%), radial-gradient(ellipse 45% 70% at 88% 25%, color-mix(in srgb, #e39a2a 24%, transparent), transparent 70%), radial-gradient(ellipse 45% 70% at 40% 90%, color-mix(in srgb, #8e44ad 24%, transparent), transparent 70%), radial-gradient(ellipse 45% 70% at 75% 45%, color-mix(in srgb, #5a9a3a 24%, transparent), transparent 70%)">
             <div class="container">
                 <h2>Take a closer look</h2>
-                <p class="pdp-meta">Click a + to see what that control does.</p>
                 <div class="closer-stage pan">
                     <div class="pan-view"><div class="pan-track">
                     <img src="/img/3d/wetweld.webp" alt="WetWeld, rendered in 3D" loading="lazy">
@@ -69,7 +68,7 @@
                     </div></div>
                     <button class="pan-btn" aria-label="Show the other side">&rsaquo;</button>
                 </div>
-                <p class="closer-caption" aria-live="polite"><strong>Tap a +</strong>to see what that control does.</p>
+                <p class="closer-caption" aria-live="polite" hidden></p>
             </div>
         </section>
 
@@ -180,7 +179,7 @@
           close();
           if (!was) {
             s.classList.add("open"); s.setAttribute("aria-expanded", "true");
-            if (cap) cap.innerHTML = s.querySelector(".spot-card").innerHTML;
+            if (cap) { cap.innerHTML = s.querySelector(".spot-card").innerHTML; cap.hidden = false; }
           }
         });
       });

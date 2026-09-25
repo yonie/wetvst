@@ -54,7 +54,6 @@
         <section class="pdp-closer" style="background: radial-gradient(ellipse 45% 70% at 18% 35%, color-mix(in srgb, #8a8540 24%, transparent), transparent 70%), radial-gradient(ellipse 45% 70% at 62% 75%, color-mix(in srgb, #22c55e 24%, transparent), transparent 70%), radial-gradient(ellipse 45% 70% at 88% 25%, color-mix(in srgb, #b91c1c 24%, transparent), transparent 70%)">
             <div class="container">
                 <h2>Take a closer look</h2>
-                <p class="pdp-meta">Click a + to see what that control does.</p>
                 <div class="closer-stage">
                     <img src="/img/3d/wetchorus.webp" alt="WetChorus, rendered in 3D" loading="lazy">
                     <button class="spot" style="left: 13.52%; top: 38.12%" aria-label="Speed"><span class="spot-card"><strong>Speed</strong>Modulation rate, 0.05 to 10 Hz. Around 5 is a slow, obvious chorus.</span></button>
@@ -62,7 +61,7 @@
                     <button class="spot" style="left: 47.07%; top: 38.21%" aria-label="Mode"><span class="spot-card"><strong>Mode</strong>The phase between the two voices. VIB moves them together; CHORUS opposes them for the wide sound, which largely cancels in mono.</span></button>
                     <button class="spot left" style="left: 81.64%; top: 50.51%" aria-label="Meters"><span class="spot-card"><strong>Meters</strong>Input, and each side of the output.</span></button>
                 </div>
-                <p class="closer-caption" aria-live="polite"><strong>Tap a +</strong>to see what that control does.</p>
+                <p class="closer-caption" aria-live="polite" hidden></p>
             </div>
         </section>
 
@@ -169,7 +168,7 @@
           close();
           if (!was) {
             s.classList.add("open"); s.setAttribute("aria-expanded", "true");
-            if (cap) cap.innerHTML = s.querySelector(".spot-card").innerHTML;
+            if (cap) { cap.innerHTML = s.querySelector(".spot-card").innerHTML; cap.hidden = false; }
           }
         });
       });

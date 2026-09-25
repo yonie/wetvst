@@ -513,7 +513,7 @@ footer a:hover {
 @media (max-width: 700px) {
   .spot { width: 22px; height: 22px; margin: -36px 0 0 -11px; } .spot::before { font-size: 15px; line-height: 18px; } .spot::after { height: 12px; }
   .spot .spot-card { display: none; }
-  .closer-caption { display: block; min-height: 5.5em; margin: 20px auto 0; max-width: 32rem; text-align: left; background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; color: var(--text-secondary); font-size: 0.9rem; }
+  .closer-caption:not([hidden]) { display: block; margin: 20px auto 0; max-width: 32rem; text-align: left; background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; color: var(--text-secondary); font-size: 0.9rem; }
   .closer-caption strong { display: block; color: var(--text-primary); margin-bottom: 4px; }
 }
 .pdp-closer .pdp-meta { margin: 0 auto; }
