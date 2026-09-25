@@ -492,3 +492,22 @@ footer a:hover {
 .card-tags span { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-secondary); border: 1px solid var(--border); border-radius: 100px; padding: 3px 9px; }
 .card-tags .tag-free { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 50%, transparent); }
 .card-tags .tag-premium { color: #1a1400; background: var(--yellow); border-color: var(--yellow); }
+
+/* Take a closer look: the 3D render with a marker on every control. Positions
+   come from pdp-hotspots.py, which projects each control through the render's
+   own camera, so they are percentages of the image. */
+.pdp-closer { padding: 56px 0 64px; border-top: 1px solid var(--border); text-align: center; }
+.pdp-closer h2 { font-size: 1.75rem; margin-bottom: 6px; }
+.closer-stage { position: relative; display: inline-block; margin-top: 28px; max-width: 900px; width: 100%; }
+.closer-stage.wide { max-width: none; }
+.closer-stage img { display: block; width: 100%; filter: drop-shadow(0 30px 40px rgba(0,0,0,0.6)); }
+.spot { position: absolute; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%; border: 2px solid #fff; background: rgba(20,20,20,0.55); color: #fff; cursor: pointer; padding: 0; backdrop-filter: blur(4px); box-shadow: 0 0 0 4px rgba(255,255,255,0.15); transition: transform 0.15s, background 0.15s; }
+.spot::before { content: "+"; font: 600 20px/26px Inter, sans-serif; display: block; transition: transform 0.2s; }
+.spot:hover, .spot:focus { background: var(--accent); transform: scale(1.1); outline: none; z-index: 5; }
+.spot:hover::before, .spot:focus::before { transform: rotate(45deg); }
+.spot-card { position: absolute; left: 22px; top: 50%; transform: translateY(-50%); width: 240px; text-align: left; background: rgba(24,22,20,0.96); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; font: 400 0.85rem/1.45 Inter, sans-serif; color: var(--text-secondary); box-shadow: 0 16px 40px rgba(0,0,0,0.6); opacity: 0; visibility: hidden; transition: opacity 0.15s; pointer-events: none; }
+.spot-card strong { display: block; color: var(--text-primary); font-weight: 600; margin-bottom: 4px; }
+.spot.left .spot-card { left: auto; right: 22px; }
+.spot:hover .spot-card, .spot:focus .spot-card { opacity: 1; visibility: visible; }
+@media (max-width: 700px) { .spot { width: 24px; height: 24px; margin: -12px 0 0 -12px; } .spot::before { font-size: 16px; line-height: 20px; } .spot-card { width: 190px; } }
+.pdp-closer .pdp-meta { margin: 0 auto; }
