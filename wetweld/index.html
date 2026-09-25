@@ -55,18 +55,20 @@
             <div class="container">
                 <h2>Take a closer look</h2>
                 <p class="pdp-meta">Click a + to see what that control does.</p>
-                <div class="closer-scroll"><div class="closer-stage wide">
+                <div class="closer-stage pan">
+                    <div class="pan-track">
                     <img src="/img/3d/wetweld.webp" alt="WetWeld, rendered in 3D" loading="lazy">
-                    <button class="spot" style="left: 16.45%; top: 35.2%" aria-label="Input gain"><span class="spot-card"><strong>Input gain</strong>Decides how hard every stage after it works, not just how loud it is.</span></button>
-                    <button class="spot" style="left: 25.33%; top: 44.5%" aria-label="High pass"><span class="spot-card"><strong>High pass</strong>Off, 30, 50 or 70 Hz, third order.</span></button>
-                    <button class="spot" style="left: 31.62%; top: 38.99%" aria-label="Colour"><span class="spot-card"><strong>Colour</strong>Saturation and its soft compression on one control.</span></button>
-                    <button class="spot" style="left: 39.35%; top: 39.66%" aria-label="Low shelf"><span class="spot-card"><strong>Low shelf</strong>Corner at 30, 50, 70 or 110 Hz, then up to 12 dB either way.</span></button>
-                    <button class="spot" style="left: 55.24%; top: 39.97%" aria-label="High shelf"><span class="spot-card"><strong>High shelf</strong>Corner at 5, 8, 12 or 18 kHz, then up to 12 dB either way.</span></button>
-                    <button class="spot left" style="left: 63.19%; top: 40.83%" aria-label="Shave"><span class="spot-card"><strong>Shave</strong>High-frequency transient compression, read on the meter beside it.</span></button>
-                    <button class="spot left" style="left: 74.72%; top: 39.3%" aria-label="Widen"><span class="spot-card"><strong>Widen</strong>From true mono to twice the width that arrived.</span></button>
-                    <button class="spot left" style="left: 83.04%; top: 35.36%" aria-label="Output gain"><span class="spot-card"><strong>Output gain</strong>Puts back what the chain cost.</span></button>
-                </div></div>
-                <label class="closer-zoom">Zoom <input type="range" min="1" max="3" step="0.05" value="1" aria-label="Zoom"></label>
+                    <button class="spot below" style="left: 16.45%; top: 35.2%" aria-label="Input gain"><span class="spot-card"><strong>Input gain</strong>Decides how hard every stage after it works, not just how loud it is.</span></button>
+                    <button class="spot below" style="left: 25.33%; top: 44.5%" aria-label="High pass"><span class="spot-card"><strong>High pass</strong>Off, 30, 50 or 70 Hz, third order.</span></button>
+                    <button class="spot below" style="left: 31.62%; top: 38.99%" aria-label="Colour"><span class="spot-card"><strong>Colour</strong>Saturation and its soft compression on one control.</span></button>
+                    <button class="spot below" style="left: 39.35%; top: 39.66%" aria-label="Low shelf"><span class="spot-card"><strong>Low shelf</strong>Corner at 30, 50, 70 or 110 Hz, then up to 12 dB either way.</span></button>
+                    <button class="spot below" style="left: 55.24%; top: 39.97%" aria-label="High shelf"><span class="spot-card"><strong>High shelf</strong>Corner at 5, 8, 12 or 18 kHz, then up to 12 dB either way.</span></button>
+                    <button class="spot left below" style="left: 63.19%; top: 40.83%" aria-label="Shave"><span class="spot-card"><strong>Shave</strong>High-frequency transient compression, read on the meter beside it.</span></button>
+                    <button class="spot left below" style="left: 74.72%; top: 39.3%" aria-label="Widen"><span class="spot-card"><strong>Widen</strong>From true mono to twice the width that arrived.</span></button>
+                    <button class="spot left below" style="left: 83.04%; top: 35.36%" aria-label="Output gain"><span class="spot-card"><strong>Output gain</strong>Puts back what the chain cost.</span></button>
+                    </div>
+                    <button class="pan-btn" aria-label="Show the other side">&rsaquo;</button>
+                </div>
                 <p class="closer-caption" aria-live="polite"><strong>Tap a +</strong>to see what that control does.</p>
             </div>
         </section>
@@ -131,7 +133,7 @@
                         </div>
                     </div>
                     <div class="card mini">
-                        <a href="/weteq/" class="card-img"><img src="/img/weteq.png" alt="The WetEQ panel" loading="lazy" style="object-position: 75% 0%; transform-origin: 75% 0%; --zoom: 1.25"></a>
+                        <a href="/weteq/" class="card-img"><img src="/img/weteq.png" alt="The WetEQ panel" loading="lazy" style="object-position: 75% 0%; transform-origin: 75% 0%; --zoom: 1.1"></a>
                         <div class="card-body">
                             <h3><a href="/weteq/">WetEQ</a></h3>
                             
@@ -142,7 +144,7 @@
                         </div>
                     </div>
                     <div class="card mini">
-                        <a href="/wetcompressor/" class="card-img"><img src="/img/wetcompressor.png" alt="The WetCompressor panel" loading="lazy" style="object-position: 50% 18%; transform-origin: 50% 18%; --zoom: 1.2"></a>
+                        <a href="/wetcompressor/" class="card-img"><img src="/img/wetcompressor.png" alt="The WetCompressor panel" loading="lazy" style="object-position: 50% 6%; transform-origin: 50% 6%; --zoom: 1.6"></a>
                         <div class="card-body">
                             <h3><a href="/wetcompressor/">WetCompressor</a></h3>
                             
@@ -183,11 +185,11 @@
         });
       });
       document.addEventListener("click", close);
-      var zoom = document.querySelector(".closer-zoom input"), stage = document.querySelector(".closer-scroll .closer-stage");
-      if (zoom && stage) zoom.addEventListener("input", function () {
-        var sc = stage.parentNode, mid = (sc.scrollLeft + sc.clientWidth / 2) / sc.scrollWidth;
-        stage.style.width = (zoom.value * 100) + "%";
-        sc.scrollLeft = mid * sc.scrollWidth - sc.clientWidth / 2;  // keep the middle in view
+      var pan = document.querySelector(".closer-stage.pan");
+      if (pan) pan.querySelector(".pan-btn").addEventListener("click", function (e) {
+        e.stopPropagation(); close();
+        var right = pan.classList.toggle("at-right");
+        this.innerHTML = right ? "&lsaquo;" : "&rsaquo;";
       });
       document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
     })();

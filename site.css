@@ -494,7 +494,6 @@ footer a:hover {
 .pdp-closer { padding: 56px 0 64px; border-top: 1px solid var(--border); text-align: center; }
 .pdp-closer h2 { font-size: 1.75rem; margin-bottom: 6px; }
 .closer-stage { position: relative; display: inline-block; margin-top: 28px; max-width: 900px; width: 100%; }
-.closer-stage.wide { max-width: none; }
 .closer-stage img { display: block; width: 100%; filter: drop-shadow(0 30px 40px rgba(0,0,0,0.6)); }
 .spot { position: absolute; width: 26px; height: 26px; margin: -44px 0 0 -13px; border-radius: 50%; border: 2px solid #fff; background: rgba(20,20,20,0.7); color: #fff; cursor: pointer; padding: 0; backdrop-filter: blur(4px); box-shadow: 0 2px 8px rgba(0,0,0,0.5); transition: transform 0.15s, background 0.15s; }
 /* A pin, not a cover: the marker floats above its control with a stem down to it. */
@@ -518,11 +517,16 @@ footer a:hover {
   .closer-caption strong { display: block; color: var(--text-primary); margin-bottom: 4px; }
 }
 .pdp-closer .pdp-meta { margin: 0 auto; }
-/* A rack-wide render gets a zoom slider; the stage grows and scrolls sideways. */
-.closer-scroll { overflow-x: auto; overflow-y: hidden; margin-top: 28px; padding: 50px 0 10px; scrollbar-color: #555 transparent; }
-.closer-scroll .closer-stage { margin-top: 0; width: 100%; max-width: none; transition: width 0.15s; }
-.closer-zoom { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 18px; color: var(--text-secondary); font-size: 0.85rem; }
-.closer-zoom input { width: 220px; accent-color: var(--yellow); }
+/* A rack-wide render, zoomed: wider than the text column, showing about 60%
+   of the rack, and one button slides the track to the other end. The pins sit
+   on the track, so they travel with it. */
+.closer-stage.pan { display: block; position: relative; left: 50%; width: min(1400px, calc(100vw - 32px)); max-width: none; margin: 28px 0 0; transform: translateX(-50%); overflow: hidden; padding: 30px 0 60px; }
+.pan-track { position: relative; width: 170%; transition: transform 0.6s cubic-bezier(.4,0,.2,1); }
+.pan-track img { display: block; width: 100%; }
+.closer-stage.pan.at-right .pan-track { transform: translateX(-41.18%); }
+.pan-btn { position: absolute; top: 50%; right: 12px; width: 52px; height: 52px; margin-top: -26px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.3); background: rgba(20,20,20,0.75); color: #fff; font: 400 34px/48px Inter, sans-serif; cursor: pointer; backdrop-filter: blur(6px); box-shadow: 0 6px 20px rgba(0,0,0,0.5); z-index: 6; transition: background 0.15s; }
+.pan-btn:hover { background: var(--accent); }
+.closer-stage.pan.at-right .pan-btn { right: auto; left: 12px; }
 /* More coming + ask for ideas, under the plugin grid. */
 .next { margin-top: 40px; padding: 32px; border: 1px dashed #4a4540; border-radius: 12px; text-align: center; }
 .next h3 { font-size: 1.35rem; margin-bottom: 6px; }
@@ -532,3 +536,7 @@ footer a:hover {
 .next-form textarea:focus { outline: none; border-color: var(--accent); }
 .next-thanks { color: var(--text-primary) !important; margin-top: 20px !important; font-weight: 600; }
 .next .notify-note { margin-top: 12px; }
+/* Where a panel prints its labels above the controls (WetWeld), the pin hangs below instead. */
+.spot.below { margin-top: 38px; }
+.spot.below::after { top: auto; bottom: 100%; background: linear-gradient(rgba(255,255,255,0.2), #fff); }
+@media (max-width: 700px) { .spot.below { margin-top: 14px; } }

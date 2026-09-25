@@ -62,7 +62,6 @@
                     <button class="spot" style="left: 49.99%; top: 36.22%" aria-label="Gain reduction"><span class="spot-card"><strong>Gain reduction</strong>How much the gain cell is taking, down to 22 dB.</span></button>
                     <button class="spot left" style="left: 79.86%; top: 61.25%" aria-label="Output"><span class="spot-card"><strong>Output</strong>Makeup gain after the output stage, plus or minus 30 dB.</span></button>
                 </div>
-                
                 <p class="closer-caption" aria-live="polite"><strong>Tap a +</strong>to see what that control does.</p>
             </div>
         </section>
@@ -101,7 +100,7 @@
                 <h2>More from WET</h2>
                 <div class="plugin-grid cards mini-grid">
                     <div class="card mini">
-                        <a href="/wetchorus/" class="card-img"><img src="/img/wetchorus.png" alt="The WetChorus panel" loading="lazy" style="object-position: 80% 40%; transform-origin: 80% 40%; --zoom: 1.5"></a>
+                        <a href="/wetchorus/" class="card-img"><img src="/img/wetchorus.png" alt="The WetChorus panel" loading="lazy" style="object-position: 92% 40%; transform-origin: 92% 40%; --zoom: 1.5"></a>
                         <div class="card-body">
                             <h3><a href="/wetchorus/">WetChorus</a></h3>
                             
@@ -112,7 +111,7 @@
                         </div>
                     </div>
                     <div class="card mini">
-                        <a href="/wetweld/" class="card-img"><img src="/img/wetweld-hero.png" alt="The WetWeld panel" loading="lazy" style="object-position: 60% 50%; transform-origin: 60% 50%; --zoom: 1.0"></a>
+                        <a href="/wetweld/" class="card-img"><img src="/img/wetweld-hero.png" alt="The WetWeld panel" loading="lazy" style="object-position: 47% 22%; transform-origin: 47% 22%; --zoom: 1.4"></a>
                         <div class="card-body">
                             <h3><a href="/wetweld/">WetWeld</a><span class="badge-premium">Premium</span></h3>
                             <p class="card-kind">Mastering processor</p>
@@ -175,11 +174,11 @@
         });
       });
       document.addEventListener("click", close);
-      var zoom = document.querySelector(".closer-zoom input"), stage = document.querySelector(".closer-scroll .closer-stage");
-      if (zoom && stage) zoom.addEventListener("input", function () {
-        var sc = stage.parentNode, mid = (sc.scrollLeft + sc.clientWidth / 2) / sc.scrollWidth;
-        stage.style.width = (zoom.value * 100) + "%";
-        sc.scrollLeft = mid * sc.scrollWidth - sc.clientWidth / 2;  // keep the middle in view
+      var pan = document.querySelector(".closer-stage.pan");
+      if (pan) pan.querySelector(".pan-btn").addEventListener("click", function (e) {
+        e.stopPropagation(); close();
+        var right = pan.classList.toggle("at-right");
+        this.innerHTML = right ? "&lsaquo;" : "&rsaquo;";
       });
       document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
     })();

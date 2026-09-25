@@ -65,7 +65,6 @@
                     <button class="spot" style="left: 24.59%; top: 74.69%" aria-label="HPF and LPF"><span class="spot-card"><strong>HPF and LPF</strong>20 Hz to 2 kHz and 2 to 20 kHz, out of circuit at the ends of their travel.</span></button>
                     <button class="spot" style="left: 20.31%; top: 24.52%" aria-label="Meters"><span class="spot-card"><strong>Meters</strong>Left and right, input and output.</span></button>
                 </div>
-                
                 <p class="closer-caption" aria-live="polite"><strong>Tap a +</strong>to see what that control does.</p>
             </div>
         </section>
@@ -104,7 +103,7 @@
                 <h2>More from WET</h2>
                 <div class="plugin-grid cards mini-grid">
                     <div class="card mini">
-                        <a href="/wetcompressor/" class="card-img"><img src="/img/wetcompressor.png" alt="The WetCompressor panel" loading="lazy" style="object-position: 50% 18%; transform-origin: 50% 18%; --zoom: 1.2"></a>
+                        <a href="/wetcompressor/" class="card-img"><img src="/img/wetcompressor.png" alt="The WetCompressor panel" loading="lazy" style="object-position: 50% 6%; transform-origin: 50% 6%; --zoom: 1.6"></a>
                         <div class="card-body">
                             <h3><a href="/wetcompressor/">WetCompressor</a></h3>
                             
@@ -115,7 +114,7 @@
                         </div>
                     </div>
                     <div class="card mini">
-                        <a href="/wetchorus/" class="card-img"><img src="/img/wetchorus.png" alt="The WetChorus panel" loading="lazy" style="object-position: 80% 40%; transform-origin: 80% 40%; --zoom: 1.5"></a>
+                        <a href="/wetchorus/" class="card-img"><img src="/img/wetchorus.png" alt="The WetChorus panel" loading="lazy" style="object-position: 92% 40%; transform-origin: 92% 40%; --zoom: 1.5"></a>
                         <div class="card-body">
                             <h3><a href="/wetchorus/">WetChorus</a></h3>
                             
@@ -126,7 +125,7 @@
                         </div>
                     </div>
                     <div class="card mini">
-                        <a href="/wetweld/" class="card-img"><img src="/img/wetweld-hero.png" alt="The WetWeld panel" loading="lazy" style="object-position: 60% 50%; transform-origin: 60% 50%; --zoom: 1.0"></a>
+                        <a href="/wetweld/" class="card-img"><img src="/img/wetweld-hero.png" alt="The WetWeld panel" loading="lazy" style="object-position: 47% 22%; transform-origin: 47% 22%; --zoom: 1.4"></a>
                         <div class="card-body">
                             <h3><a href="/wetweld/">WetWeld</a><span class="badge-premium">Premium</span></h3>
                             <p class="card-kind">Mastering processor</p>
@@ -178,11 +177,11 @@
         });
       });
       document.addEventListener("click", close);
-      var zoom = document.querySelector(".closer-zoom input"), stage = document.querySelector(".closer-scroll .closer-stage");
-      if (zoom && stage) zoom.addEventListener("input", function () {
-        var sc = stage.parentNode, mid = (sc.scrollLeft + sc.clientWidth / 2) / sc.scrollWidth;
-        stage.style.width = (zoom.value * 100) + "%";
-        sc.scrollLeft = mid * sc.scrollWidth - sc.clientWidth / 2;  // keep the middle in view
+      var pan = document.querySelector(".closer-stage.pan");
+      if (pan) pan.querySelector(".pan-btn").addEventListener("click", function (e) {
+        e.stopPropagation(); close();
+        var right = pan.classList.toggle("at-right");
+        this.innerHTML = right ? "&lsaquo;" : "&rsaquo;";
       });
       document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
     })();

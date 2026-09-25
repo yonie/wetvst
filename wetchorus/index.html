@@ -62,7 +62,6 @@
                     <button class="spot" style="left: 47.07%; top: 38.21%" aria-label="Mode"><span class="spot-card"><strong>Mode</strong>The phase between the two voices. VIB moves them together; CHORUS opposes them for the wide sound, which largely cancels in mono.</span></button>
                     <button class="spot left" style="left: 81.64%; top: 50.51%" aria-label="Meters"><span class="spot-card"><strong>Meters</strong>Input, and each side of the output.</span></button>
                 </div>
-                
                 <p class="closer-caption" aria-live="polite"><strong>Tap a +</strong>to see what that control does.</p>
             </div>
         </section>
@@ -101,7 +100,7 @@
                 <h2>More from WET</h2>
                 <div class="plugin-grid cards mini-grid">
                     <div class="card mini">
-                        <a href="/wetweld/" class="card-img"><img src="/img/wetweld-hero.png" alt="The WetWeld panel" loading="lazy" style="object-position: 60% 50%; transform-origin: 60% 50%; --zoom: 1.0"></a>
+                        <a href="/wetweld/" class="card-img"><img src="/img/wetweld-hero.png" alt="The WetWeld panel" loading="lazy" style="object-position: 47% 22%; transform-origin: 47% 22%; --zoom: 1.4"></a>
                         <div class="card-body">
                             <h3><a href="/wetweld/">WetWeld</a><span class="badge-premium">Premium</span></h3>
                             <p class="card-kind">Mastering processor</p>
@@ -134,7 +133,7 @@
                         </div>
                     </div>
                     <div class="card mini">
-                        <a href="/weteq/" class="card-img"><img src="/img/weteq.png" alt="The WetEQ panel" loading="lazy" style="object-position: 75% 0%; transform-origin: 75% 0%; --zoom: 1.25"></a>
+                        <a href="/weteq/" class="card-img"><img src="/img/weteq.png" alt="The WetEQ panel" loading="lazy" style="object-position: 75% 0%; transform-origin: 75% 0%; --zoom: 1.1"></a>
                         <div class="card-body">
                             <h3><a href="/weteq/">WetEQ</a></h3>
                             
@@ -175,11 +174,11 @@
         });
       });
       document.addEventListener("click", close);
-      var zoom = document.querySelector(".closer-zoom input"), stage = document.querySelector(".closer-scroll .closer-stage");
-      if (zoom && stage) zoom.addEventListener("input", function () {
-        var sc = stage.parentNode, mid = (sc.scrollLeft + sc.clientWidth / 2) / sc.scrollWidth;
-        stage.style.width = (zoom.value * 100) + "%";
-        sc.scrollLeft = mid * sc.scrollWidth - sc.clientWidth / 2;  // keep the middle in view
+      var pan = document.querySelector(".closer-stage.pan");
+      if (pan) pan.querySelector(".pan-btn").addEventListener("click", function (e) {
+        e.stopPropagation(); close();
+        var right = pan.classList.toggle("at-right");
+        this.innerHTML = right ? "&lsaquo;" : "&rsaquo;";
       });
       document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
     })();
