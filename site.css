@@ -551,3 +551,6 @@ footer a:hover {
 /* Name and Premium badge centred on one line. */
 .card-body h3 { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
 .card-body h3 .badge-premium { margin-left: 0; }
+/* Neutral button: blue means free, yellow means paid, so anything else is neither. */
+.btn-neutral { background: #3a3632; color: var(--text-primary); border: 1px solid #504a44; }
+.btn-neutral:hover { background: #48433e; }
