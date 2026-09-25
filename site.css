@@ -496,13 +496,30 @@ footer a:hover {
 .closer-stage { position: relative; display: inline-block; margin-top: 28px; max-width: 900px; width: 100%; }
 .closer-stage.wide { max-width: none; }
 .closer-stage img { display: block; width: 100%; filter: drop-shadow(0 30px 40px rgba(0,0,0,0.6)); }
-.spot { position: absolute; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%; border: 2px solid #fff; background: rgba(20,20,20,0.55); color: #fff; cursor: pointer; padding: 0; backdrop-filter: blur(4px); box-shadow: 0 0 0 4px rgba(255,255,255,0.15); transition: transform 0.15s, background 0.15s; }
-.spot::before { content: "+"; font: 600 20px/26px Inter, sans-serif; display: block; transition: transform 0.2s; }
-.spot:hover, .spot:focus { background: var(--accent); transform: scale(1.1); outline: none; z-index: 5; }
-.spot:hover::before, .spot:focus::before { transform: rotate(45deg); }
-.spot-card { position: absolute; left: 22px; top: 50%; transform: translateY(-50%); width: 240px; text-align: left; background: rgba(24,22,20,0.96); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; font: 400 0.85rem/1.45 Inter, sans-serif; color: var(--text-secondary); box-shadow: 0 16px 40px rgba(0,0,0,0.6); opacity: 0; visibility: hidden; transition: opacity 0.15s; pointer-events: none; }
+.spot { position: absolute; width: 26px; height: 26px; margin: -44px 0 0 -13px; border-radius: 50%; border: 2px solid #fff; background: rgba(20,20,20,0.7); color: #fff; cursor: pointer; padding: 0; backdrop-filter: blur(4px); box-shadow: 0 2px 8px rgba(0,0,0,0.5); transition: transform 0.15s, background 0.15s; }
+/* A pin, not a cover: the marker floats above its control with a stem down to it. */
+.spot::after { content: ""; position: absolute; left: 50%; top: 100%; width: 2px; height: 16px; margin-left: -1px; background: linear-gradient(#fff, rgba(255,255,255,0.2)); pointer-events: none; }
+.spot::before { content: "+"; font: 600 18px/22px Inter, sans-serif; display: block; transition: transform 0.2s; }
+.spot:hover { transform: scale(1.12); }
+.spot:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.spot.open { background: var(--accent); z-index: 5; }
+.spot.open::before { transform: rotate(45deg); }
+.spot-card { position: absolute; left: 30px; top: 50%; transform: translateY(-50%); width: 240px; text-align: left; background: rgba(24,22,20,0.96); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; font: 400 0.85rem/1.45 Inter, sans-serif; color: var(--text-secondary); box-shadow: 0 16px 40px rgba(0,0,0,0.6); opacity: 0; visibility: hidden; transition: opacity 0.15s; pointer-events: none; }
 .spot-card strong { display: block; color: var(--text-primary); font-weight: 600; margin-bottom: 4px; }
-.spot.left .spot-card { left: auto; right: 22px; }
-.spot:hover .spot-card, .spot:focus .spot-card { opacity: 1; visibility: visible; }
-@media (max-width: 700px) { .spot { width: 24px; height: 24px; margin: -12px 0 0 -12px; } .spot::before { font-size: 16px; line-height: 20px; } .spot-card { width: 190px; } }
+.spot.left .spot-card { left: auto; right: 30px; }
+.spot.open .spot-card { opacity: 1; visibility: visible; }
+/* Phones: the card would run off the screen beside a marker, so the text
+   shows in a caption under the render instead. */
+.closer-caption { display: none; }
+@media (max-width: 700px) {
+  .spot { width: 22px; height: 22px; margin: -36px 0 0 -11px; } .spot::before { font-size: 15px; line-height: 18px; } .spot::after { height: 12px; }
+  .spot .spot-card { display: none; }
+  .closer-caption { display: block; min-height: 5.5em; margin: 20px auto 0; max-width: 32rem; text-align: left; background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; color: var(--text-secondary); font-size: 0.9rem; }
+  .closer-caption strong { display: block; color: var(--text-primary); margin-bottom: 4px; }
+}
 .pdp-closer .pdp-meta { margin: 0 auto; }
+/* A rack-wide render gets a zoom slider; the stage grows and scrolls sideways. */
+.closer-scroll { overflow-x: auto; overflow-y: hidden; margin-top: 28px; padding: 50px 0 10px; scrollbar-color: #555 transparent; }
+.closer-scroll .closer-stage { margin-top: 0; width: 100%; max-width: none; transition: width 0.15s; }
+.closer-zoom { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 18px; color: var(--text-secondary); font-size: 0.85rem; }
+.closer-zoom input { width: 220px; accent-color: var(--yellow); }

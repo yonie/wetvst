@@ -54,7 +54,7 @@
         <section class="pdp-closer" style="background: radial-gradient(ellipse 45% 70% at 18% 35%, color-mix(in srgb, #c0392b 24%, transparent), transparent 70%), radial-gradient(ellipse 45% 70% at 62% 75%, color-mix(in srgb, #3f8a3a 24%, transparent), transparent 70%), radial-gradient(ellipse 45% 70% at 88% 25%, color-mix(in srgb, #2f5fa8 24%, transparent), transparent 70%)">
             <div class="container">
                 <h2>Take a closer look</h2>
-                <p class="pdp-meta">Hover over a control, or tap it, to see what it does.</p>
+                <p class="pdp-meta">Click a + to see what that control does.</p>
                 <div class="closer-stage">
                     <img src="/img/3d/weteq.webp" alt="WetEQ, rendered in 3D" loading="lazy">
                     <button class="spot left" style="left: 70.45%; top: 14.79%" aria-label="HF shelf"><span class="spot-card"><strong>HF shelf</strong>1.5 to 22 kHz, boost or cut up to 15 dB.</span></button>
@@ -65,6 +65,8 @@
                     <button class="spot" style="left: 24.59%; top: 74.69%" aria-label="HPF and LPF"><span class="spot-card"><strong>HPF and LPF</strong>20 Hz to 2 kHz and 2 to 20 kHz, out of circuit at the ends of their travel.</span></button>
                     <button class="spot" style="left: 20.31%; top: 24.52%" aria-label="Meters"><span class="spot-card"><strong>Meters</strong>Left and right, input and output.</span></button>
                 </div>
+                
+                <p class="closer-caption" aria-live="polite"><strong>Tap a +</strong>to see what that control does.</p>
             </div>
         </section>
 
@@ -155,5 +157,35 @@
             <p>WET VST by <a href="https://github.com/yonie">Ronald Klarenbeek</a> | <a href="mailto:contact@wetvst.com">contact@wetvst.com</a> | <a href="/privacy.html">Privacy</a></p>
         </div>
     </footer>
+    <script>
+    // Take a closer look: a click opens one marker's card and closes the rest;
+    // a second click, a click elsewhere or Escape closes it. On phones the same
+    // text goes into the caption under the render.
+    (function () {
+      var spots = document.querySelectorAll(".spot"), cap = document.querySelector(".closer-caption");
+      if (!spots.length) return;
+      function close() { spots.forEach(function (s) { s.classList.remove("open"); s.setAttribute("aria-expanded", "false"); }); }
+      spots.forEach(function (s) {
+        s.setAttribute("aria-expanded", "false");
+        s.addEventListener("click", function (e) {
+          e.stopPropagation();
+          var was = s.classList.contains("open");
+          close();
+          if (!was) {
+            s.classList.add("open"); s.setAttribute("aria-expanded", "true");
+            if (cap) cap.innerHTML = s.querySelector(".spot-card").innerHTML;
+          }
+        });
+      });
+      document.addEventListener("click", close);
+      var zoom = document.querySelector(".closer-zoom input"), stage = document.querySelector(".closer-scroll .closer-stage");
+      if (zoom && stage) zoom.addEventListener("input", function () {
+        var sc = stage.parentNode, mid = (sc.scrollLeft + sc.clientWidth / 2) / sc.scrollWidth;
+        stage.style.width = (zoom.value * 100) + "%";
+        sc.scrollLeft = mid * sc.scrollWidth - sc.clientWidth / 2;  // keep the middle in view
+      });
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+    })();
+    </script>
 </body>
 </html>

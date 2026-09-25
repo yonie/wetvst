@@ -54,8 +54,8 @@
         <section class="pdp-closer" style="background: radial-gradient(ellipse 45% 70% at 18% 35%, color-mix(in srgb, #d33a2c 24%, transparent), transparent 70%), radial-gradient(ellipse 45% 70% at 62% 75%, color-mix(in srgb, #4aa3df 24%, transparent), transparent 70%), radial-gradient(ellipse 45% 70% at 88% 25%, color-mix(in srgb, #e39a2a 24%, transparent), transparent 70%), radial-gradient(ellipse 45% 70% at 40% 90%, color-mix(in srgb, #8e44ad 24%, transparent), transparent 70%), radial-gradient(ellipse 45% 70% at 75% 45%, color-mix(in srgb, #5a9a3a 24%, transparent), transparent 70%)">
             <div class="container">
                 <h2>Take a closer look</h2>
-                <p class="pdp-meta">Hover over a control, or tap it, to see what it does.</p>
-                <div class="closer-stage wide">
+                <p class="pdp-meta">Click a + to see what that control does.</p>
+                <div class="closer-scroll"><div class="closer-stage wide">
                     <img src="/img/3d/wetweld.webp" alt="WetWeld, rendered in 3D" loading="lazy">
                     <button class="spot" style="left: 16.45%; top: 35.2%" aria-label="Input gain"><span class="spot-card"><strong>Input gain</strong>Decides how hard every stage after it works, not just how loud it is.</span></button>
                     <button class="spot" style="left: 25.33%; top: 44.5%" aria-label="High pass"><span class="spot-card"><strong>High pass</strong>Off, 30, 50 or 70 Hz, third order.</span></button>
@@ -65,7 +65,9 @@
                     <button class="spot left" style="left: 63.19%; top: 40.83%" aria-label="Shave"><span class="spot-card"><strong>Shave</strong>High-frequency transient compression, read on the meter beside it.</span></button>
                     <button class="spot left" style="left: 74.72%; top: 39.3%" aria-label="Widen"><span class="spot-card"><strong>Widen</strong>From true mono to twice the width that arrived.</span></button>
                     <button class="spot left" style="left: 83.04%; top: 35.36%" aria-label="Output gain"><span class="spot-card"><strong>Output gain</strong>Puts back what the chain cost.</span></button>
-                </div>
+                </div></div>
+                <label class="closer-zoom">Zoom <input type="range" min="1" max="3" step="0.05" value="1" aria-label="Zoom"></label>
+                <p class="closer-caption" aria-live="polite"><strong>Tap a +</strong>to see what that control does.</p>
             </div>
         </section>
 
@@ -160,5 +162,35 @@
             <p>WET VST by <a href="https://github.com/yonie">Ronald Klarenbeek</a> | <a href="mailto:contact@wetvst.com">contact@wetvst.com</a> | <a href="/privacy.html">Privacy</a></p>
         </div>
     </footer>
+    <script>
+    // Take a closer look: a click opens one marker's card and closes the rest;
+    // a second click, a click elsewhere or Escape closes it. On phones the same
+    // text goes into the caption under the render.
+    (function () {
+      var spots = document.querySelectorAll(".spot"), cap = document.querySelector(".closer-caption");
+      if (!spots.length) return;
+      function close() { spots.forEach(function (s) { s.classList.remove("open"); s.setAttribute("aria-expanded", "false"); }); }
+      spots.forEach(function (s) {
+        s.setAttribute("aria-expanded", "false");
+        s.addEventListener("click", function (e) {
+          e.stopPropagation();
+          var was = s.classList.contains("open");
+          close();
+          if (!was) {
+            s.classList.add("open"); s.setAttribute("aria-expanded", "true");
+            if (cap) cap.innerHTML = s.querySelector(".spot-card").innerHTML;
+          }
+        });
+      });
+      document.addEventListener("click", close);
+      var zoom = document.querySelector(".closer-zoom input"), stage = document.querySelector(".closer-scroll .closer-stage");
+      if (zoom && stage) zoom.addEventListener("input", function () {
+        var sc = stage.parentNode, mid = (sc.scrollLeft + sc.clientWidth / 2) / sc.scrollWidth;
+        stage.style.width = (zoom.value * 100) + "%";
+        sc.scrollLeft = mid * sc.scrollWidth - sc.clientWidth / 2;  // keep the middle in view
+      });
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+    })();
+    </script>
 </body>
 </html>
