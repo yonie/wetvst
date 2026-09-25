@@ -1,13 +1,13 @@
 /* Shared by every page on wetvst.com. */
 :root {
-    --bg-dark: #0a0a0a;
-    --bg-card: #141414;
-    --bg-card-hover: #1a1a1a;
+    --bg-dark: #171614;
+    --bg-card: #201e1b;
+    --bg-card-hover: #282521;
     --text-primary: #ffffff;
-    --text-secondary: #a0a0a0;
+    --text-secondary: #b3ada5;
     --accent: #3b82f6;
     --accent-hover: #2563eb;
-    --border: #2a2a2a;
+    --border: #363230;
     --green: #22c55e;
     --yellow: #eab308;
 }
@@ -145,7 +145,7 @@ nav a:hover {
 
 .plugin-card:hover {
     background: var(--bg-card-hover);
-    border-color: #3a3a3a;
+    border-color: #4a4540;
 }
 
 .plugin-card.available {
@@ -409,15 +409,14 @@ footer a:hover {
 }
 
 /* Product pages */
-.pdp-hero { padding: 48px 0 24px; }
+.pdp-hero { padding: 28px 0 24px; }
 .pdp-back { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; }
 .pdp-back:hover { color: var(--text-primary); }
-.pdp-render { width: 100%; border-radius: 12px; margin: 24px 0 32px; display: block; }
-.pdp-render.tall { max-width: 640px; margin-left: auto; margin-right: auto; }
+.pdp-render { width: auto; max-width: 100%; max-height: min(320px, 40vh); border-radius: 8px; margin: 20px auto 24px; display: block; }
 .pdp-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px 20px; }
 .pdp-title h1 { font-size: 2.75rem; letter-spacing: -0.02em; line-height: 1.1; }
 .pdp-kind { color: var(--text-secondary); font-size: 1.1rem; }
-.pdp-lead { color: var(--text-secondary); font-size: 1.1rem; max-width: 46rem; margin: 16px 0 28px; }
+.pdp-lead { color: var(--text-secondary); font-size: 1.1rem; max-width: 46rem; margin: 12px 0 22px; }
 .pdp-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
 .pdp-actions .btn { padding: 14px 28px; font-size: 1rem; }
 .pdp-meta { color: var(--text-secondary); font-size: 0.85rem; margin-top: 14px; }
@@ -433,3 +432,17 @@ footer a:hover {
 .plugin-name a, .plugin-card > a { color: inherit; text-decoration: none; }
 .plugin-name a:hover { color: var(--accent); }
 @media (max-width: 768px) { .pdp-title h1 { font-size: 2rem; } .pdp-hero { padding-top: 32px; } }
+
+/* Front-page plugin cards: one picture, one line, the buttons. The detail is on each plugin's page. */
+.plugin-grid.cards { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+.card { display: flex; flex-direction: column; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color 0.2s, background 0.2s; }
+.card:hover { border-color: #4a4540; background: var(--bg-card-hover); }
+.card-img { display: flex; align-items: center; justify-content: center; height: 220px; padding: 20px; background: #12110f; }
+.card-img img { max-width: 100%; max-height: 100%; border-radius: 6px; }
+.card-body { display: flex; flex-direction: column; flex: 1; padding: 20px 24px 24px; }
+.card-body h3 { font-size: 1.35rem; }
+.card-body h3 a { color: inherit; text-decoration: none; }
+.card-kind { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 10px; }
+.card-line { color: var(--text-secondary); font-size: 0.92rem; flex: 1; margin-bottom: 20px; }
+.card .plugin-actions .btn { padding: 9px 16px; }
+.card-tag { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--yellow); margin-left: 8px; vertical-align: middle; }

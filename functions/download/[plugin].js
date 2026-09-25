@@ -1,11 +1,13 @@
 /**
- * /download/<plugin> - sends the visitor straight to the current release zip.
+ * /download/<plugin> - serves the current release zip from wetvst.com.
  *
- * The free plug-ins are released on GitHub, and the zip stays there: GitHub's
- * per-asset download counter is the only download history there is. This
- * redirect only saves the visitor the trip through the release page. The asset
- * name carries the version, so "latest" is looked up rather than hard-coded,
- * and the answer is cached at the edge for an hour.
+ * The free plug-ins are released on GitHub, and the file stays there: GitHub's
+ * per-asset download counter is the only download history there is. So the zip
+ * is streamed THROUGH this function rather than copied here - the visitor sees
+ * wetvst.com, and every download still reaches GitHub and still counts. The
+ * body is passed through untouched, which costs no CPU time. The asset name
+ * carries the version, so "latest" is looked up rather than hard-coded, and
+ * that lookup (not the zip) is cached at the edge for an hour.
  *
  * WetWeld is not on GitHub; its zip is served from files.wetvst.com.
  */
@@ -36,8 +38,7 @@ async function latestZip(repo, waitUntil) {
     waitUntil(cache.put(key, res.clone()));
   }
   const release = await res.json();
-  const zip = (release.assets || []).find((a) => a.name.endsWith(".zip"));
-  return zip ? zip.browser_download_url : null;
+  return (release.assets || []).find((a) => a.name.endsWith(".zip")) || null;
 }
 
 export async function onRequestGet({ params, waitUntil }) {
@@ -49,5 +50,16 @@ export async function onRequestGet({ params, waitUntil }) {
 
   const zip = await latestZip(repo, waitUntil);
   // No public release yet (or GitHub unreachable): the release page still works.
-  return Response.redirect(zip || `https://github.com/yonie/${repo}/releases`, 302);
+  if (!zip) return Response.redirect(`https://github.com/yonie/${repo}/releases`, 302);
+
+  const file = await fetch(zip.browser_download_url, { headers: { "User-Agent": "wetvst.com" } });
+  if (!file.ok) return Response.redirect(zip.browser_download_url, 302);
+  return new Response(file.body, {
+    headers: {
+      "Content-Type": "application/zip",
+      "Content-Disposition": `attachment; filename="${zip.name}"`,
+      ...(file.headers.get("content-length") && { "Content-Length": file.headers.get("content-length") }),
+      "Cache-Control": "no-store",
+    },
+  });
 }
