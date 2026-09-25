@@ -418,7 +418,10 @@ footer a:hover {
 .pdp-stage { display: flex; justify-content: center; align-items: center; }
 .pdp-render { max-width: 100%; max-height: 460px; width: auto; border-radius: 8px; display: block; box-shadow: 0 30px 60px -20px rgba(0,0,0,0.8), 0 0 80px -10px color-mix(in srgb, var(--tint, #888) 35%, transparent); }
 .pdp-hero.wide { background: radial-gradient(ellipse 80% 70% at 50% 35%, color-mix(in srgb, var(--tint, #888) 18%, transparent), transparent 70%); }
-.pdp-hero.wide .pdp-hero-grid { grid-template-columns: 1fr; gap: 32px; }
+.pdp-hero.wide .pdp-hero-grid { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 32px 48px; align-items: start; }
+.pdp-hero.wide .pdp-stage { grid-column: 1 / -1; }
+.pdp-buybox { background: color-mix(in srgb, var(--bg-card) 80%, transparent); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-top: 8px; }
+.pdp-buybox .pdp-actions .btn { width: 100%; justify-content: center; }
 .pdp-title { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
 .pdp-title h1 { font-size: 3rem; letter-spacing: -0.02em; line-height: 1.05; }
 .pdp-kind { color: var(--text-secondary); font-size: 1.15rem; margin-top: 6px; }
@@ -431,7 +434,7 @@ footer a:hover {
 .pdp-title .badge-premium { margin-left: 0; font-size: 0.8rem; }
 .btn-premium { background: var(--yellow); color: #1a1400; font-weight: 600; }
 .btn-premium:hover { background: #facc15; }
-@media (max-width: 900px) { .pdp-hero-grid { grid-template-columns: 1fr; gap: 28px; } .pdp-render { max-height: 360px; } .pdp-title h1 { font-size: 2.2rem; } }
+@media (max-width: 900px) { .pdp-hero-grid, .pdp-hero.wide .pdp-hero-grid { grid-template-columns: 1fr; gap: 28px; } .pdp-render { max-height: 360px; } .pdp-title h1 { font-size: 2.2rem; } }
 .pdp-section { padding: 48px 0; border-top: 1px solid var(--border); }
 .pdp-section h2 { font-size: 1.5rem; margin-bottom: 20px; }
 .pdp-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; align-items: start; }
@@ -472,3 +475,14 @@ footer a:hover {
 .card .plugin-actions { position: relative; z-index: 2; }
 .card .plugin-actions .btn { white-space: nowrap; }
 .pdp-meta a { color: var(--text-primary); }
+.pdp-band { padding: 56px 24px; border-top: 1px solid var(--border); }
+.pdp-band img { display: block; width: 100%; max-width: 1400px; margin: 0 auto; filter: drop-shadow(0 30px 40px rgba(0,0,0,0.6)); }
+.pdp-cols.single { grid-template-columns: 1fr; }
+/* A wide rack panel sits in a dark surround, like a unit in a rack, so it
+   does not float as a bare strip. */
+.pdp-hero.wide .pdp-render { padding: 18px 22px; background: linear-gradient(180deg, #2b2926, #161513); border: 1px solid #45403a; border-radius: 14px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 40px 70px -25px rgba(0,0,0,0.85), 0 0 90px -20px color-mix(in srgb, var(--tint, #888) 40%, transparent); }
+.plugin-grid.mini-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+.card.mini .card-img { height: 140px; }
+.card.mini .card-body { padding: 14px 16px 16px; }
+.card.mini .card-body h3 { font-size: 1.05rem; }
+.card.mini .card-kind { margin-bottom: 0; }
