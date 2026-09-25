@@ -1,0 +1,435 @@
+/* Shared by every page on wetvst.com. */
+:root {
+    --bg-dark: #0a0a0a;
+    --bg-card: #141414;
+    --bg-card-hover: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --accent: #3b82f6;
+    --accent-hover: #2563eb;
+    --border: #2a2a2a;
+    --green: #22c55e;
+    --yellow: #eab308;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* Header */
+header {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+.logo span {
+    color: var(--accent);
+}
+
+nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    margin-left: 32px;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+}
+
+nav a:hover {
+    color: var(--text-primary);
+}
+
+/* Hero */
+.hero {
+    padding: 80px 0 60px;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+}
+
+.hero .subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto 32px;
+}
+
+.hero-badges {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.badge svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Plugins Section */
+.plugins {
+    padding: 60px 0;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.section-header h2 {
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+.section-header p {
+    color: var(--text-secondary);
+}
+
+.plugin-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+}
+
+.plugin-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    transition: all 0.2s;
+}
+
+.plugin-card:hover {
+    background: var(--bg-card-hover);
+    border-color: #3a3a3a;
+}
+
+.plugin-card.available {
+    border-color: var(--green);
+}
+
+.plugin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+}
+
+.plugin-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.plugin-status {
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 100px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.plugin-status.available {
+    background: rgba(34, 197, 94, 0.15);
+    color: var(--green);
+}
+
+.plugin-status.coming {
+    background: rgba(234, 179, 8, 0.15);
+    color: var(--yellow);
+}
+
+.plugin-screenshot {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.plugin-description {
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    font-size: 0.95rem;
+}
+
+.plugin-features {
+    list-style: none;
+    margin-bottom: 24px;
+}
+
+.plugin-features li {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    padding: 4px 0;
+    padding-left: 20px;
+    position: relative;
+}
+
+.plugin-features li::before {
+    content: ">";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+}
+
+.plugin-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--accent-hover);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+    background: var(--bg-card);
+    color: var(--text-primary);
+}
+
+.btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* Philosophy Section */
+.philosophy {
+    padding: 60px 0;
+    border-top: 1px solid var(--border);
+}
+
+.philosophy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 32px;
+}
+
+.philosophy-item h3 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.philosophy-item p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* Marks a link that leaves the site, so nobody is taken off it unannounced. */
+.ext-icon {
+    width: 0.7em;
+    height: 0.7em;
+    margin-left: 0.35em;
+    vertical-align: baseline;
+    opacity: 0.7;
+}
+nav a:hover .ext-icon { opacity: 1; }
+
+/* Support Section */
+.support {
+    padding: 60px 0;
+    border-top: 1px solid var(--border);
+    text-align: center;
+}
+
+.support h2 {
+    font-size: 1.75rem;
+    margin-bottom: 12px;
+}
+
+.support p {
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.coffee-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    background: #FFDD00;
+    color: #000;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.coffee-btn:hover {
+    background: #e6c700;
+    transform: translateY(-2px);
+}
+
+/* Footer */
+footer {
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+footer a {
+    color: var(--text-secondary);
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: var(--text-primary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .hero .subtitle {
+        font-size: 1.1rem;
+    }
+
+    nav {
+        display: none;
+    }
+
+    .plugin-card {
+        padding: 24px;
+    }
+}
+    
+/* Release-notice signup. Consent-based and release-only: see privacy.html.
+   Deliberately plain - a static form posting to the list provider, no
+   script, no embed iframe, nothing to load. */
+.notify { padding: 5rem 0; border-top: 1px solid var(--border); }
+.notify h2 { font-size: 1.75rem; margin-bottom: 0.75rem; }
+.notify > .container > p { color: var(--text-secondary); max-width: 40rem; }
+.notify-form { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1.5rem 0 0; max-width: 34rem; }
+.notify-form input[type="email"] {
+    flex: 1 1 16rem;
+    padding: 0.75rem 1rem;
+    font: inherit;
+    color: var(--text-primary);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+}
+.notify-form input[type="email"]:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+.notify-form button { cursor: pointer; border: none; }
+.notify-consent {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+    margin-top: 1rem;
+    max-width: 40rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+.notify-consent input { margin-top: 0.25rem; flex-shrink: 0; }
+.notify-note { font-size: 0.8rem; opacity: 0.6; margin-top: 1rem; }
+.notify-hp { position: absolute; left: -9999px; }
+.sr-only {
+    position: absolute; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* Product pages */
+.pdp-hero { padding: 48px 0 24px; }
+.pdp-back { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; }
+.pdp-back:hover { color: var(--text-primary); }
+.pdp-render { width: 100%; border-radius: 12px; margin: 24px 0 32px; display: block; }
+.pdp-render.tall { max-width: 640px; margin-left: auto; margin-right: auto; }
+.pdp-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px 20px; }
+.pdp-title h1 { font-size: 2.75rem; letter-spacing: -0.02em; line-height: 1.1; }
+.pdp-kind { color: var(--text-secondary); font-size: 1.1rem; }
+.pdp-lead { color: var(--text-secondary); font-size: 1.1rem; max-width: 46rem; margin: 16px 0 28px; }
+.pdp-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.pdp-actions .btn { padding: 14px 28px; font-size: 1rem; }
+.pdp-meta { color: var(--text-secondary); font-size: 0.85rem; margin-top: 14px; }
+.pdp-section { padding: 48px 0; border-top: 1px solid var(--border); }
+.pdp-section h2 { font-size: 1.5rem; margin-bottom: 20px; }
+.pdp-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; align-items: start; }
+.pdp-section .plugin-features li { font-size: 1rem; padding: 6px 0 6px 20px; }
+.pdp-shot { width: 100%; border-radius: 8px; }
+.pdp-media video, .pdp-media iframe { width: 100%; aspect-ratio: 16 / 9; border: none; border-radius: 8px; }
+.pdp-install dt { font-weight: 600; margin-top: 16px; }
+.pdp-install dd { color: var(--text-secondary); font-size: 0.95rem; }
+.pdp-install code { font-size: 0.85rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; overflow-wrap: anywhere; }
+.plugin-name a, .plugin-card > a { color: inherit; text-decoration: none; }
+.plugin-name a:hover { color: var(--accent); }
+@media (max-width: 768px) { .pdp-title h1 { font-size: 2rem; } .pdp-hero { padding-top: 32px; } }
