@@ -546,3 +546,5 @@ footer a:hover {
 .spot.below { margin-top: 38px; }
 .spot.below::after { top: auto; bottom: 100%; background: linear-gradient(rgba(255,255,255,0.2), #fff); }
 @media (max-width: 700px) { .spot.below { margin-top: 14px; } }
+.hl-free { color: var(--accent); }
+.hl-premium { color: var(--yellow); }
