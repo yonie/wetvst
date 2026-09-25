@@ -408,18 +408,30 @@ footer a:hover {
     clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
 }
 
-/* Product pages */
-.pdp-hero { padding: 28px 0 24px; }
+/* Product pages. The hero is a split: the panel on a lit stage tinted with the
+   plug-in's own colour, name, price and button beside it. A wide panel
+   (WetWeld) spans the full width with the text underneath. */
+.pdp-hero { padding: 24px 0 56px; background: radial-gradient(ellipse 70% 90% at 30% 55%, color-mix(in srgb, var(--tint, #888) 22%, transparent), transparent 70%); border-bottom: 1px solid var(--border); }
 .pdp-back { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; }
 .pdp-back:hover { color: var(--text-primary); }
-.pdp-render { width: auto; max-width: 100%; max-height: min(320px, 40vh); border-radius: 8px; margin: 20px auto 24px; display: block; }
-.pdp-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px 20px; }
-.pdp-title h1 { font-size: 2.75rem; letter-spacing: -0.02em; line-height: 1.1; }
-.pdp-kind { color: var(--text-secondary); font-size: 1.1rem; }
-.pdp-lead { color: var(--text-secondary); font-size: 1.1rem; max-width: 46rem; margin: 12px 0 22px; }
+.pdp-hero-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 48px; align-items: center; margin-top: 24px; }
+.pdp-stage { display: flex; justify-content: center; align-items: center; }
+.pdp-render { max-width: 100%; max-height: 460px; width: auto; border-radius: 8px; display: block; box-shadow: 0 30px 60px -20px rgba(0,0,0,0.8), 0 0 80px -10px color-mix(in srgb, var(--tint, #888) 35%, transparent); }
+.pdp-hero.wide { background: radial-gradient(ellipse 80% 70% at 50% 35%, color-mix(in srgb, var(--tint, #888) 18%, transparent), transparent 70%); }
+.pdp-hero.wide .pdp-hero-grid { grid-template-columns: 1fr; gap: 32px; }
+.pdp-title { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.pdp-title h1 { font-size: 3rem; letter-spacing: -0.02em; line-height: 1.05; }
+.pdp-kind { color: var(--text-secondary); font-size: 1.15rem; margin-top: 6px; }
+.pdp-lead { color: var(--text-secondary); font-size: 1.05rem; max-width: 40rem; margin: 16px 0 26px; }
 .pdp-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
 .pdp-actions .btn { padding: 14px 28px; font-size: 1rem; }
-.pdp-meta { color: var(--text-secondary); font-size: 0.85rem; margin-top: 14px; }
+.pdp-meta { color: var(--text-secondary); font-size: 0.85rem; margin-top: 14px; max-width: 40rem; }
+/* Paid products are yellow, free open source is blue. */
+.badge-premium { display: inline-block; background: var(--yellow); color: #1a1400; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border-radius: 100px; vertical-align: middle; margin-left: 10px; }
+.pdp-title .badge-premium { margin-left: 0; font-size: 0.8rem; }
+.btn-premium { background: var(--yellow); color: #1a1400; font-weight: 600; }
+.btn-premium:hover { background: #facc15; }
+@media (max-width: 900px) { .pdp-hero-grid { grid-template-columns: 1fr; gap: 28px; } .pdp-render { max-height: 360px; } .pdp-title h1 { font-size: 2.2rem; } }
 .pdp-section { padding: 48px 0; border-top: 1px solid var(--border); }
 .pdp-section h2 { font-size: 1.5rem; margin-bottom: 20px; }
 .pdp-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; align-items: start; }
@@ -431,7 +443,6 @@ footer a:hover {
 .pdp-install code { font-size: 0.85rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; overflow-wrap: anywhere; }
 .plugin-name a, .plugin-card > a { color: inherit; text-decoration: none; }
 .plugin-name a:hover { color: var(--accent); }
-@media (max-width: 768px) { .pdp-title h1 { font-size: 2rem; } .pdp-hero { padding-top: 32px; } }
 
 /* Front-page plugin cards: one picture, one line, the buttons. The detail is on each plugin's page. */
 .plugin-grid.cards { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
@@ -449,3 +460,4 @@ footer a:hover {
 .card-line { color: var(--text-secondary); font-size: 0.92rem; flex: 1; margin-bottom: 20px; }
 .card .plugin-actions .btn { padding: 9px 16px; }
 .card-tag { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--yellow); margin-left: 8px; vertical-align: middle; }
+.philosophy-item.premium h3 { color: var(--yellow); }
