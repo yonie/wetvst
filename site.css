@@ -471,3 +471,4 @@ footer a:hover {
 .card-body h3 a::after { content: ""; position: absolute; inset: 0; z-index: 1; }
 .card .plugin-actions { position: relative; z-index: 2; }
 .card .plugin-actions .btn { white-space: nowrap; }
+.pdp-meta a { color: var(--text-primary); }
