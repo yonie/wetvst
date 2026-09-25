@@ -548,3 +548,6 @@ footer a:hover {
 @media (max-width: 700px) { .spot.below { margin-top: 14px; } }
 .hl-premium { color: var(--yellow); }
 .hl-free { color: var(--accent); }
+/* Name and Premium badge centred on one line. */
+.card-body h3 { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.card-body h3 .badge-premium { margin-left: 0; }
