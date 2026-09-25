@@ -523,3 +523,12 @@ footer a:hover {
 .closer-scroll .closer-stage { margin-top: 0; width: 100%; max-width: none; transition: width 0.15s; }
 .closer-zoom { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 18px; color: var(--text-secondary); font-size: 0.85rem; }
 .closer-zoom input { width: 220px; accent-color: var(--yellow); }
+/* More coming + ask for ideas, under the plugin grid. */
+.next { margin-top: 40px; padding: 32px; border: 1px dashed #4a4540; border-radius: 12px; text-align: center; }
+.next h3 { font-size: 1.35rem; margin-bottom: 6px; }
+.next > p { color: var(--text-secondary); max-width: 36rem; margin: 0 auto; }
+.next-form { display: flex; flex-direction: column; align-items: center; gap: 12px; max-width: 34rem; margin: 20px auto 0; }
+.next-form textarea { width: 100%; padding: 12px 14px; font: inherit; color: var(--text-primary); background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; resize: vertical; }
+.next-form textarea:focus { outline: none; border-color: var(--accent); }
+.next-thanks { color: var(--text-primary) !important; margin-top: 20px !important; font-weight: 600; }
+.next .notify-note { margin-top: 12px; }

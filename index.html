@@ -125,6 +125,21 @@
                     </div>
                 </div>
                 <!-- plugins:end -->
+
+                <!-- More coming, and a question for the visitor. Replies go to
+                     functions/api/suggest.js; the form asks for nothing personal. -->
+                <div class="next" id="next">
+                    <h3>More plugins are on the way</h3>
+                    <p>What should we build next? A piece of hardware you miss, an effect you cannot find done simply, anything.</p>
+                    <form class="next-form" action="/api/suggest" method="post">
+                        <label class="sr-only" for="idea">Your idea</label>
+                        <textarea id="idea" name="idea" rows="3" maxlength="1000" required placeholder="I would love a..."></textarea>
+                        <div class="notify-hp" aria-hidden="true"><label>Leave this blank<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+                        <button type="submit" class="btn btn-primary">Send idea</button>
+                    </form>
+                    <p class="next-thanks" hidden>Thanks - it is on the list.</p>
+                    <p class="notify-note">No email needed. We only keep what you type.</p>
+                </div>
             </div>
         </section>
 
@@ -225,5 +240,17 @@
             <p style="font-size:0.8rem;opacity:0.55;margin:0.75rem auto 0;max-width:52rem">All product names, trademarks and registered trademarks are property of their respective owners, and are used here only to describe the kind of equipment these plugins were inspired by. No manufacturer has endorsed, sponsored or licensed anything in the WET line, and no third-party intellectual property is used in it.</p>
         </div>
     </footer>
+    <script>
+    // Send the idea without leaving the page; a plain POST still works without script.
+    (function () {
+      var f = document.querySelector(".next-form"), done = document.querySelector(".next-thanks");
+      if (location.search.indexOf("thanks=1") >= 0) { f.hidden = true; done.hidden = false; }
+      f.addEventListener("submit", function (e) {
+        e.preventDefault();
+        fetch(f.action, { method: "POST", body: new FormData(f), headers: { Accept: "application/json" } })
+          .finally(function () { f.hidden = true; done.hidden = false; });
+      });
+    })();
+    </script>
 </body>
 </html>
