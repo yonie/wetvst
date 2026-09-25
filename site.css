@@ -524,12 +524,14 @@ footer a:hover {
 .pan-track { position: relative; width: 170%; transition: transform 0.6s cubic-bezier(.4,0,.2,1); }
 .pan-track img { display: block; width: 100%; }
 .closer-stage.pan.at-right .pan-track { transform: translateX(-41.18%); }
-.pan-btn { position: absolute; top: 50%; right: 20px; width: 76px; height: 76px; margin-top: -38px; border-radius: 50%; border: 3px solid #1a1400; background: var(--yellow); color: #1a1400; font: 400 56px/66px Inter, sans-serif; cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.6); z-index: 6; transition: transform 0.15s, background 0.15s; animation: pan-pulse 2.2s ease-out infinite; }
-.pan-btn:hover { transform: scale(1.08); background: #facc15; animation: none; }
-/* A ring that pulses out of the button, so it is found without hunting. */
-@keyframes pan-pulse { 0% { box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 0 0 rgba(234,179,8,0.7); } 70% { box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 0 22px rgba(234,179,8,0); } 100% { box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 0 0 rgba(234,179,8,0); } }
-@media (max-width: 700px) { .pan-btn { width: 54px; height: 54px; margin-top: -27px; font-size: 40px; line-height: 50px; right: 10px; } }
-.closer-stage.pan.at-right .pan-btn { right: auto; left: 20px; }
+.pan-btn { position: absolute; top: 50%; right: 18px; width: 58px; height: 58px; margin-top: -29px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.45); background: rgba(16,15,14,0.72); color: #fff; font: 300 40px/52px Inter, sans-serif; cursor: pointer; backdrop-filter: blur(6px); box-shadow: 0 6px 18px rgba(0,0,0,0.45); z-index: 6; transition: transform 0.15s, background 0.15s; animation: pan-pulse 2.6s ease-out infinite; }
+.pan-btn:hover { transform: scale(1.06); background: rgba(16,15,14,0.9); animation: none; }
+@keyframes pan-pulse { 0% { box-shadow: 0 6px 18px rgba(0,0,0,0.45), 0 0 0 0 rgba(255,255,255,0.3); } 70% { box-shadow: 0 6px 18px rgba(0,0,0,0.45), 0 0 0 14px rgba(255,255,255,0); } 100% { box-shadow: 0 6px 18px rgba(0,0,0,0.45), 0 0 0 0 rgba(255,255,255,0); } }
+/* The side with more to see fades out: the main cue that the rack continues. */
+.closer-stage.pan { -webkit-mask-image: linear-gradient(to right, #000 86%, rgba(0,0,0,0.25)); mask-image: linear-gradient(to right, #000 86%, rgba(0,0,0,0.25)); }
+.closer-stage.pan.at-right { -webkit-mask-image: linear-gradient(to left, #000 86%, rgba(0,0,0,0.25)); mask-image: linear-gradient(to left, #000 86%, rgba(0,0,0,0.25)); }
+@media (max-width: 700px) { .pan-btn { width: 46px; height: 46px; margin-top: -23px; font-size: 32px; line-height: 42px; right: 10px; } }
+.closer-stage.pan.at-right .pan-btn { right: auto; left: 18px; }
 /* More coming + ask for ideas, under the plugin grid. */
 .next { margin-top: 40px; padding: 32px; border: 1px dashed #4a4540; border-radius: 12px; text-align: center; }
 .next h3 { font-size: 1.35rem; margin-bottom: 6px; }
