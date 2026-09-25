@@ -173,12 +173,21 @@
         });
       });
       document.addEventListener("click", close);
+      // Three stops across a rack: left end, middle, right end.
       var pan = document.querySelector(".closer-stage.pan");
-      if (pan) pan.querySelector(".pan-btn").addEventListener("click", function (e) {
-        e.stopPropagation(); close();
-        var right = pan.classList.toggle("at-right");
-        this.innerHTML = right ? "&lsaquo;" : "&rsaquo;";
-      });
+      if (pan) {
+        var track = pan.querySelector(".pan-track"), prev = pan.querySelector(".pan-prev"), next = pan.querySelector(".pan-next");
+        var stops = [0, 20.59, 41.18], at = 0;
+        var go = function (d) {
+          close(); at = Math.max(0, Math.min(stops.length - 1, at + d));
+          track.style.transform = "translateX(-" + stops[at] + "%)";
+          prev.hidden = at === 0; next.hidden = at === stops.length - 1;
+          pan.classList.toggle("at-left", at === 0); pan.classList.toggle("at-right", at === stops.length - 1);
+        };
+        prev.addEventListener("click", function (e) { e.stopPropagation(); go(-1); });
+        next.addEventListener("click", function (e) { e.stopPropagation(); go(1); });
+        pan.classList.add("at-left");
+      }
       document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
     })();
     </script>
