@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help - WET VST</title>
+    <meta name="description" content="Installing WET VST plugins, resizing the panel, licence codes and refunds.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/site.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">WET<span>VST</span></a>
+                <nav>
+                    <a href="/#plugins">Plugins</a>
+                    <a href="/#philosophy">About</a>
+                    <a href="/#notify">Stay informed</a>
+                    <a href="/#support">Donate</a>
+                    <a href="/help/">Help</a>
+                    <a href="https://github.com/yonie" target="_blank" rel="noopener">GitHub<svg class="ext-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="pdp-section" style="border-top:none">
+            <div class="container help">
+                <h1>Help</h1>
+
+                <h2>Installing</h2>
+                <dl class="pdp-install">
+                    <dt>Windows</dt>
+                    <dd>Copy the <code>.vst3</code> to <code>C:\Program Files\Common Files\VST3\</code></dd>
+                    <dt>macOS</dt>
+                    <dd>Copy the <code>.vst3</code> to <code>~/Library/Audio/Plug-Ins/VST3/</code> and the <code>.component</code> to <code>~/Library/Audio/Plug-Ins/Components/</code> for Logic and GarageBand.</dd>
+                    <dt>Linux</dt>
+                    <dd>Copy the <code>.vst3</code> to <code>~/.vst3/</code></dd>
+                </dl>
+                <p>Then restart your DAW and let it rescan its plugins.</p>
+
+                <h2>Making the panel bigger or smaller</h2>
+                <p>Right-click anywhere on the plugin and choose <strong>UI Zoom</strong>: 75%, 100% or 125%.</p>
+
+                <h2>Fine adjustments</h2>
+                <p>The knobs click through fixed steps. Hold <strong>Shift</strong> while you drag, scroll or use the arrow keys to move in smaller steps.</p>
+
+                <h2>Mono tracks</h2>
+                <p>Every plugin works on mono and stereo tracks. In Logic you can pick the Mono or Mono &rarr; Stereo version on a mono channel.</p>
+
+                <h2>macOS says the plugin cannot be verified</h2>
+                <p>Current versions are signed and notarised by Apple and open without a warning. For an older version, run this in Terminal and restart your DAW:</p>
+                <p><code>xattr -cr ~/Library/Audio/Plug-Ins/VST3/NAME.vst3</code></p>
+
+                <h2>Entering your licence code</h2>
+                <p>Load a premium plugin in your DAW and paste the code from your email into the window that opens. It works straight away, on every computer you use, and does not expire.</p>
+
+                <h2 id="resend">Lost your licence code?</h2>
+                <p>Enter the email address you paid with and we will send it again.</p>
+                <form class="help-form" action="https://shop.wetvst.com/resend" method="post">
+                    <label class="sr-only" for="resend-email">Email address</label>
+                    <input id="resend-email" name="email" type="email" required placeholder="you@example.com" autocomplete="email">
+                    <div class="notify-hp" aria-hidden="true"><label>Leave this blank<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+                    <button type="submit" class="btn btn-secondary">Send my code</button>
+                </form>
+
+                <h2>Refunds</h2>
+                <p>If a premium plugin is not for you, email <a href="mailto:contact@wetvst.com">contact@wetvst.com</a> within 14 days of buying and you get your money back. See the <a href="/terms.html">terms</a>.</p>
+
+                <h2>Anything else</h2>
+                <p>Mail <a href="mailto:contact@wetvst.com">contact@wetvst.com</a>.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>WET VST by <a href="https://github.com/yonie">Ronald Klarenbeek</a> | <a href="mailto:contact@wetvst.com">contact@wetvst.com</a> | <a href="/privacy.html">Privacy</a> | <a href="/terms.html">Terms</a> | <a href="/help/">Help</a></p>
+        </div>
+    </footer>
+</body>
+</html>
