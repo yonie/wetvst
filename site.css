@@ -546,3 +546,11 @@ footer a:hover {
 .card.soon { border-style: dashed; background: transparent; }
 .card.soon .card-img img { filter: saturate(0.85) brightness(0.9); }
 .card-img { text-decoration: none; }
+/* Cards navigate, so they end in a link, not a button: the button is kept for
+   the action itself (Download, Buy) on the product page. */
+.more-link { font-weight: 600; font-size: 1rem; text-decoration: none; }
+.more-link span { display: inline-block; transition: transform 0.2s; }
+.card:hover .more-link span { transform: translateX(4px); }
+.more-free { color: var(--accent); }
+.more-premium { color: var(--yellow); }
+.card:hover .more-link { text-decoration: underline; text-underline-offset: 4px; }
