@@ -9,7 +9,7 @@
  * carries the version, so "latest" is looked up rather than hard-coded, and
  * that lookup (not the zip) is cached at the edge for an hour.
  *
- * WetWeld is not on GitHub; its zip is served from files.wetvst.com.
+ * The premium plug-ins are not on GitHub; their zips are served from files.wetvst.com.
  */
 
 const GITHUB = {
@@ -20,8 +20,11 @@ const GITHUB = {
   wetchorus: "WetChorus",
 };
 
-// Bumped by hand at each WetWeld release, with the upload to files.wetvst.com.
-const WETWELD_ZIP = "https://files.wetvst.com/WetWeld-1.0.0.zip";
+// Premium plug-ins: the current zip of each, updated by hand at each release together
+// with the upload to files.wetvst.com. This line is the only thing that changes.
+const PREMIUM = {
+  wetweld: "https://files.wetvst.com/WetWeld-1.0.0.zip",
+};
 
 async function latestZip(repo, waitUntil) {
   const api = `https://api.github.com/repos/yonie/${repo}/releases/latest`;
@@ -43,7 +46,7 @@ async function latestZip(repo, waitUntil) {
 
 export async function onRequestGet({ params, waitUntil }) {
   const plugin = String(params.plugin || "").toLowerCase();
-  if (plugin === "wetweld") return Response.redirect(WETWELD_ZIP, 302);
+  if (PREMIUM[plugin]) return Response.redirect(PREMIUM[plugin], 302);
 
   const repo = GITHUB[plugin];
   if (!repo) return new Response("Not found", { status: 404 });
