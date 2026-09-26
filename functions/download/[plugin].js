@@ -26,6 +26,19 @@ const PREMIUM = {
   wetweld: "https://files.wetvst.com/WetWeld-1.0.0.zip",
 };
 
+// The API allows 60 anonymous calls an hour per address, and Cloudflare's addresses
+// are shared, so it refuses often. The web page for the latest release is not limited
+// that way: it redirects to the tag, and every release zip is named <Repo>-<tag>.zip.
+async function fromTag(repo) {
+  const res = await fetch(`https://github.com/yonie/${repo}/releases/latest`, {
+    redirect: "manual", headers: { "User-Agent": "wetvst.com" },
+  });
+  const tag = (res.headers.get("location") || "").match(/\/releases\/tag\/([^/?#]+)$/);
+  if (!tag) return null;
+  const name = `${repo}-${tag[1]}.zip`;
+  return { name, browser_download_url: `https://github.com/yonie/${repo}/releases/download/${tag[1]}/${name}` };
+}
+
 async function latestZip(repo, waitUntil) {
   const api = `https://api.github.com/repos/yonie/${repo}/releases/latest`;
   const cache = caches.default;
@@ -35,7 +48,7 @@ async function latestZip(repo, waitUntil) {
     res = await fetch(api, {
       headers: { "User-Agent": "wetvst.com", Accept: "application/vnd.github+json" },
     });
-    if (!res.ok) return null;
+    if (!res.ok) return fromTag(repo);
     res = new Response(res.body, res);
     res.headers.set("Cache-Control", "public, max-age=3600");
     waitUntil(cache.put(key, res.clone()));
