@@ -52,8 +52,16 @@
                 <p>Every plugin works on mono and stereo tracks. In Logic you can pick the Mono or Mono &rarr; Stereo version on a mono channel.</p>
 
                 <h2>macOS says the plugin cannot be verified</h2>
-                <p>Current versions are signed and notarised by Apple and open without a warning. For an older version, run this in Terminal and restart your DAW:</p>
-                <p><code>xattr -cr ~/Library/Audio/Plug-Ins/VST3/NAME.vst3</code></p>
+                <p>Current versions are signed and notarised by Apple and open without a warning. If an older version is blocked:</p>
+                <ol class="help-steps">
+                    <li>Open <strong>Terminal</strong>: press <kbd>Cmd</kbd> + <kbd>Space</kbd>, type <em>Terminal</em> and press <kbd>Return</kbd>.</li>
+                    <li>Copy this line, paste it into the Terminal window and press <kbd>Return</kbd>:
+                        <p><code class="copy">xattr -cr ~/Library/Audio/Plug-Ins/VST3/Wet*.vst3</code></p></li>
+                    <li>If you use Logic or GarageBand, do the same with this line:
+                        <p><code class="copy">xattr -cr ~/Library/Audio/Plug-Ins/Components/Wet*.component</code></p></li>
+                    <li>Close Terminal and restart your DAW.</li>
+                </ol>
+                <p>This clears the download warning for every WET plugin at once; there is nothing to fill in.</p>
 
                 <h2>Entering your licence code</h2>
                 <p>Load a premium plugin in your DAW and paste the code from your email into the window that opens. It works straight away, on every computer you use, and does not expire.</p>
