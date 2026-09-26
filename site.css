@@ -544,6 +544,5 @@ footer a:hover {
 .card-body h3 .badge-premium { margin-left: 0; }
 /* The last tile: more is on the way. Same card, no product, dashed edge. */
 .card.soon { border-style: dashed; background: transparent; }
-.card.soon .card-img { display: flex; align-items: center; justify-content: center; background: repeating-linear-gradient(135deg, #1c1a18 0 14px, #211f1c 14px 28px); }
-.card.soon .card-img span { font: 300 64px/1 Inter, sans-serif; color: #5a544d; }
+.card.soon .card-img img { filter: saturate(0.85) brightness(0.9); }
 .card-img { text-decoration: none; }
