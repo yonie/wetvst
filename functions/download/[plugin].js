@@ -9,7 +9,8 @@
  * carries the version, so "latest" is looked up rather than hard-coded, and
  * that lookup (not the zip) is cached at the edge for an hour.
  *
- * The premium plug-ins are not on GitHub; their zips are served from files.wetvst.com.
+ * The premium plug-ins are not on GitHub; their zips are served from files.wetvst.com,
+ * which counts nothing, so each download is tallied in the downloads table of D1.
  */
 
 const GITHUB = {
@@ -57,9 +58,16 @@ async function latestZip(repo, waitUntil) {
   return (release.assets || []).find((a) => a.name.endsWith(".zip")) || null;
 }
 
-export async function onRequestGet({ params, waitUntil }) {
+export async function onRequestGet({ params, waitUntil, env }) {
   const plugin = String(params.plugin || "").toLowerCase();
-  if (PREMIUM[plugin]) return Response.redirect(PREMIUM[plugin], 302);
+  if (PREMIUM[plugin]) {
+    // files.wetvst.com keeps no counter, so premium downloads are tallied here, per day.
+    if (env.DB) waitUntil(env.DB.prepare(
+      "INSERT INTO downloads (day, plugin, n) VALUES (?, ?, 1) " +
+      "ON CONFLICT (day, plugin) DO UPDATE SET n = n + 1"
+    ).bind(new Date().toISOString().slice(0, 10), plugin).run().catch(() => {}));
+    return Response.redirect(PREMIUM[plugin], 302);
+  }
 
   const repo = GITHUB[plugin];
   if (!repo) return new Response("Not found", { status: 404 });
