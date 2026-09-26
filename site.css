@@ -533,15 +533,6 @@ footer a:hover {
 @media (max-width: 700px) { .pan-btn { width: 60px; height: 60px; margin-top: -30px; font-size: 42px; line-height: 54px; right: 10px; } }
 .pan-btn.pan-prev { right: auto; left: 22px; }
 .pan-btn[hidden] { display: none; }
-/* More coming + ask for ideas, under the plugin grid. */
-.next { margin-top: 40px; padding: 32px; border: 1px dashed #4a4540; border-radius: 12px; text-align: center; }
-.next h3 { font-size: 1.35rem; margin-bottom: 6px; }
-.next > p { color: var(--text-secondary); max-width: 36rem; margin: 0 auto; }
-.next-form { display: flex; flex-direction: column; align-items: center; gap: 12px; max-width: 34rem; margin: 20px auto 0; }
-.next-form textarea { width: 100%; padding: 12px 14px; font: inherit; color: var(--text-primary); background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; resize: vertical; }
-.next-form textarea:focus { outline: none; border-color: var(--accent); }
-.next-thanks { color: var(--text-primary) !important; margin-top: 20px !important; font-weight: 600; }
-.next .notify-note { margin-top: 12px; }
 /* Where a panel prints its labels above the controls (WetWeld), the pin hangs below instead. */
 .spot.below { margin-top: 38px; }
 .spot.below::after { top: auto; bottom: 100%; background: linear-gradient(rgba(255,255,255,0.2), #fff); }
@@ -551,6 +542,8 @@ footer a:hover {
 /* Name and Premium badge centred on one line. */
 .card-body h3 { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
 .card-body h3 .badge-premium { margin-left: 0; }
-/* Neutral button: blue means free, yellow means paid, so anything else is neither. */
-.btn-neutral { background: #3a3632; color: var(--text-primary); border: 1px solid #504a44; }
-.btn-neutral:hover { background: #48433e; }
+/* The last tile: more is on the way. Same card, no product, dashed edge. */
+.card.soon { border-style: dashed; background: transparent; }
+.card.soon .card-img { display: flex; align-items: center; justify-content: center; background: repeating-linear-gradient(135deg, #1c1a18 0 14px, #211f1c 14px 28px); }
+.card.soon .card-img span { font: 300 64px/1 Inter, sans-serif; color: #5a544d; }
+.card-img { text-decoration: none; }
