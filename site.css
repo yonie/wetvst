@@ -501,6 +501,9 @@ footer a:hover {
 @media (max-width: 700px) { .spot.below { margin-top: 14px; } }
 .hl-premium { color: var(--yellow); }
 .hl-free { color: var(--accent); }
+/* The free line says so on its card and page, in the free colour. */
+.card-free { color: var(--accent); font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; }
+.pdp-free { color: var(--accent); font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; }
 /* Name and Premium badge centred on one line. */
 .card-body h3 { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
 .card-body h3 .badge-premium { margin-left: 0; }
