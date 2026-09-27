@@ -14,16 +14,71 @@
  * re-enter itself on its own fetch(). Middleware runs in-line and passes the
  * request on with context.next().
  *
- * Deliberately not an analytics beacon: no script is added to the page, and no
- * cookie, identifier, IP address or full user agent is stored. Rows are
- * counters over (day, referrer, page, country, device), so no visitor is
- * identifiable from the table.
+ * Deliberately not an analytics beacon: no script is added to the page and no
+ * cookie is set. Two tables are written:
  *
- * The consequence of holding no identifier, and it is the right trade: this
- * counts HITS, not PEOPLE. Unique visitors need a cookie or a fingerprint.
- * GitHub's figures carry uniques because GitHub sets its own - never compare
- * the two series as though they measured the same thing.
+ * - `hits`: counters over (day, referrer, page, country, device).
+ * - `visits`: one row per page view, carrying a visitor key so the pages one
+ *   visitor saw on one day can be read in order. The key is a hash of the IP
+ *   address and user agent with a random salt that exists for one UTC day
+ *   only. The IP and user agent are never stored, and once the day's salt is
+ *   deleted a key cannot be recomputed from them, so keys from different days
+ *   cannot be linked to each other or to anyone.
  */
+
+// A key links requests within one day and nothing more. The salt is made on
+// the day's first request, kept in D1 so every isolate agrees on it, and the
+// previous days' salts are deleted as soon as a new one exists.
+let cachedSalt = null; // { day, salt } for this isolate
+
+async function daySalt(db, day) {
+  if (cachedSalt && cachedSalt.day === day) return cachedSalt.salt;
+  const fresh = [...crypto.getRandomValues(new Uint8Array(32))]
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+  await db
+    .prepare("INSERT OR IGNORE INTO salts (day, salt) VALUES (?, ?)")
+    .bind(day, fresh)
+    .run();
+  const row = await db.prepare("SELECT salt FROM salts WHERE day = ?").bind(day).first();
+  await db.prepare("DELETE FROM salts WHERE day < ?").bind(day).run();
+  cachedSalt = { day, salt: row.salt };
+  return row.salt;
+}
+
+async function visitorKey(salt, request) {
+  const ip = request.headers.get("cf-connecting-ip") || "";
+  const ua = request.headers.get("user-agent") || "";
+  const digest = await crypto.subtle.digest(
+    "SHA-256",
+    new TextEncoder().encode(salt + "|" + ip + "|" + ua)
+  );
+  return [...new Uint8Array(digest).slice(0, 8)]
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+// Crawlers and scripts, so a report can leave them out. A heuristic, not a
+// wall: anything that lies about its user agent reads as a person.
+function isBot(request) {
+  const ua = request.headers.get("user-agent") || "";
+  return !ua || /bot|crawl|spider|slurp|curl|wget|python|httpx|go-http|java\/|okhttp|headless|scan|preview/i.test(ua);
+}
+
+async function recordVisit(db, request, url, row, status) {
+  const now = new Date();
+  const day = row[0];
+  const t = Math.floor((now.getTime() - Date.parse(day + "T00:00:00Z")) / 1000);
+  const salt = await daySalt(db, day);
+  const visitor = await visitorKey(salt, request);
+  await db
+    .prepare(
+      "INSERT INTO visits (day, t, visitor, path, ref_host, ref_url, country, device, bot, status) " +
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    )
+    .bind(day, t, visitor, url.pathname, row[1], row[2], row[4], row[5], isBot(request) ? 1 : 0, status)
+    .run();
+}
 
 // Count page views only. Assets inflate every figure and say nothing about
 // where a visitor came from: one visit to / pulls several images and an mp4.
@@ -92,6 +147,7 @@ export async function onRequest(context) {
         .run()
         .catch(() => {})
     );
+    waitUntil(recordVisit(env.DB, request, url, row, response.status).catch(() => {}));
   }
 
   return response;
