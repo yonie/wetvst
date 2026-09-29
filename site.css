@@ -403,6 +403,14 @@ footer a:hover {
 .pdp-section .plugin-features li { font-size: 1rem; padding: 6px 0 6px 20px; }
 .pdp-shot { width: 100%; border-radius: 8px; }
 .pdp-media video, .pdp-media iframe { width: 100%; aspect-ratio: 16 / 9; border: none; border-radius: 8px; }
+.pdp-media video { display: block; background: #000; }
+.pdp-video { position: relative; }
+.pdp-video .play { position: absolute; left: 50%; top: 50%; width: 88px; height: 88px; margin: -44px 0 0 -44px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.9); background: rgba(0,0,0,0.6); cursor: pointer; transition: background 0.15s, transform 0.15s; }
+.pdp-video .play::before { content: ""; position: absolute; left: 34px; top: 26px; border-style: solid; border-width: 18px 0 18px 30px; border-color: transparent transparent transparent #fff; }
+.pdp-video .play:hover { background: rgba(0,0,0,0.8); transform: scale(1.06); }
+.pdp-video::after { content: ""; position: absolute; inset: 0; border-radius: 8px; background: rgba(0,0,0,0.55); pointer-events: none; }
+.pdp-video .play { z-index: 1; }
+.pdp-video.playing .play, .pdp-video.playing::after { display: none; }
 .pdp-install dt { font-weight: 600; margin-top: 16px; }
 .pdp-install dd { color: var(--text-secondary); font-size: 0.95rem; }
 .pdp-install code { font-size: 0.85rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; overflow-wrap: anywhere; }
