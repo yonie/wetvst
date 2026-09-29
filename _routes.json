@@ -1,0 +1,14 @@
+{
+ "version": 1,
+ "include": [
+  "/*"
+ ],
+ "exclude": [
+  "/img/*",
+  "/site.css",
+  "/favicon.ico",
+  "/robots.txt",
+  "/video/wetdelay.jpg",
+  "/video/wetreverb.jpg"
+ ]
+}
