@@ -91,16 +91,12 @@ function isPageView(url, request) {
   return path.endsWith("/") || path.endsWith(".html") || !path.includes(".");
 }
 
-// A video play. Product pages load their video with preload="none", so the
-// browser asks for the mp4 only when someone presses play. Seeking asks for a
-// later range and is not a new play; Safari first probes bytes 0-1 and then
-// asks again from 0, so the probe is left out.
+// A video request. Product pages load their video with preload="none", so the
+// browser asks for the mp4 only when someone presses play. Seeking asks again,
+// and the Range header that would tell the two apart does not reach this code
+// (checked 2026-09-29), so /stats counts each visitor once per video per day.
 function isPlay(url, request) {
-  if (request.method !== "GET" || !/^\/video\/[a-z0-9-]+\.mp4$/.test(url.pathname)) return false;
-  const range = request.headers.get("range");
-  if (!range) return true;
-  const m = /^bytes=(\d+)-(\d*)/.exec(range);
-  return !!m && m[1] === "0" && m[2] !== "1";
+  return request.method === "GET" && /^\/video\/[a-z0-9-]+\.mp4$/.test(url.pathname);
 }
 
 async function recordPlay(db, request, url, day, status) {
