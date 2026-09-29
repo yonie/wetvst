@@ -18,6 +18,7 @@
  * cookie is set. Two tables are written:
  *
  * - `hits`: counters over (day, referrer, page, country, device).
+ * - `plays`: one row per video play, keyed the same way.
  * - `visits`: one row per page view, carrying a visitor key so the pages one
  *   visitor saw on one day can be read in order. The key is a hash of the IP
  *   address and user agent with a random salt that exists for one UTC day
@@ -90,6 +91,30 @@ function isPageView(url, request) {
   return path.endsWith("/") || path.endsWith(".html") || !path.includes(".");
 }
 
+// A video play. Product pages load their video with preload="none", so the
+// browser asks for the mp4 only when someone presses play. Seeking asks for a
+// later range and is not a new play; Safari first probes bytes 0-1 and then
+// asks again from 0, so the probe is left out.
+function isPlay(url, request) {
+  if (request.method !== "GET" || !/^\/video\/[a-z0-9-]+\.mp4$/.test(url.pathname)) return false;
+  const range = request.headers.get("range");
+  if (!range) return true;
+  const m = /^bytes=(\d+)-(\d*)/.exec(range);
+  return !!m && m[1] === "0" && m[2] !== "1";
+}
+
+async function recordPlay(db, request, url, day, status) {
+  const t = Math.floor((Date.now() - Date.parse(day + "T00:00:00Z")) / 1000);
+  const salt = await daySalt(db, day);
+  const visitor = await visitorKey(salt, request);
+  await db
+    .prepare(
+      "INSERT INTO plays (day, t, visitor, path, country, device, bot, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+    )
+    .bind(day, t, visitor, url.pathname, request.cf?.country || "XX", device(request), isBot(request) ? 1 : 0, status)
+    .run();
+}
+
 // The host answers "which site sent them"; the trimmed URL answers "which PAGE
 // of it" - the difference between knowing a blog linked us and knowing which
 // article did. Query strings are dropped: they carry campaign junk and
@@ -148,6 +173,11 @@ export async function onRequest(context) {
         .catch(() => {})
     );
     waitUntil(recordVisit(env.DB, request, url, row, response.status).catch(() => {}));
+  }
+
+  if (env.DB && isPlay(url, request)) {
+    const day = new Date().toISOString().slice(0, 10);
+    waitUntil(recordPlay(env.DB, request, url, day, response.status).catch(() => {}));
   }
 
   return response;
