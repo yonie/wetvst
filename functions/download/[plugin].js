@@ -24,7 +24,7 @@ const GITHUB = {
 // Premium plug-ins: the current zip of each, updated by hand at each release together
 // with the upload to files.wetvst.com. This line is the only thing that changes.
 const PREMIUM = {
-  wetweld: "https://files.wetvst.com/WetWeld-1.0.0.zip",
+  wetweld: "https://files.wetvst.com/WetWeld-1.0.1.zip",
 };
 
 // The API allows 60 anonymous calls an hour per address, and Cloudflare's addresses
