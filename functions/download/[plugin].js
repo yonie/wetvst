@@ -1,3 +1,21 @@
+// Days are Amsterdam calendar days from 3 October 2026 on, with t the seconds
+// since local midnight on the wall clock (so t / 3600 is the local hour). Rows
+// before that are UTC days. The visitor key's salt follows the same day, so a
+// key no longer changes at 02:00 in the middle of an evening.
+const AMS_FROM = Date.parse("2026-10-02T22:00:00Z");
+const amsParts = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "Europe/Amsterdam", year: "numeric", month: "2-digit", day: "2-digit",
+  hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23",
+});
+function dayAndSecond(ms) {
+  if (ms < AMS_FROM) {
+    const day = new Date(ms).toISOString().slice(0, 10);
+    return { day, t: Math.floor((ms - Date.parse(day + "T00:00:00Z")) / 1000) };
+  }
+  const p = Object.fromEntries(amsParts.formatToParts(new Date(ms)).map((x) => [x.type, x.value]));
+  return { day: `${p.year}-${p.month}-${p.day}`, t: +p.hour * 3600 + +p.minute * 60 + +p.second };
+}
+
 /**
  * /download/<plugin> - serves the current release zip from wetvst.com.
  *
@@ -65,7 +83,7 @@ export async function onRequestGet({ params, waitUntil, env }) {
     if (env.DB) waitUntil(env.DB.prepare(
       "INSERT INTO downloads (day, plugin, n) VALUES (?, ?, 1) " +
       "ON CONFLICT (day, plugin) DO UPDATE SET n = n + 1"
-    ).bind(new Date().toISOString().slice(0, 10), plugin).run().catch(() => {}));
+    ).bind(dayAndSecond(Date.now()).day, plugin).run().catch(() => {}));
     return Response.redirect(PREMIUM[plugin], 302);
   }
 

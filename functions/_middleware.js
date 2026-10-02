@@ -27,6 +27,24 @@
  *   cannot be linked to each other or to anyone.
  */
 
+// Days are Amsterdam calendar days from 3 October 2026 on, with t the seconds
+// since local midnight on the wall clock (so t / 3600 is the local hour). Rows
+// before that are UTC days. The visitor key's salt follows the same day, so a
+// key no longer changes at 02:00 in the middle of an evening.
+const AMS_FROM = Date.parse("2026-10-02T22:00:00Z");
+const amsParts = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "Europe/Amsterdam", year: "numeric", month: "2-digit", day: "2-digit",
+  hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23",
+});
+function dayAndSecond(ms) {
+  if (ms < AMS_FROM) {
+    const day = new Date(ms).toISOString().slice(0, 10);
+    return { day, t: Math.floor((ms - Date.parse(day + "T00:00:00Z")) / 1000) };
+  }
+  const p = Object.fromEntries(amsParts.formatToParts(new Date(ms)).map((x) => [x.type, x.value]));
+  return { day: `${p.year}-${p.month}-${p.day}`, t: +p.hour * 3600 + +p.minute * 60 + +p.second };
+}
+
 // A key links requests within one day and nothing more. The salt is made on
 // the day's first request, kept in D1 so every isolate agrees on it, and the
 // previous days' salts are deleted as soon as a new one exists.
@@ -66,10 +84,8 @@ function isBot(request) {
   return !ua || /bot|crawl|spider|slurp|curl|wget|python|httpx|go-http|java\/|okhttp|headless|scan|preview/i.test(ua);
 }
 
-async function recordVisit(db, request, url, row, status) {
-  const now = new Date();
+async function recordVisit(db, request, url, row, status, t) {
   const day = row[0];
-  const t = Math.floor((now.getTime() - Date.parse(day + "T00:00:00Z")) / 1000);
   const salt = await daySalt(db, day);
   const visitor = await visitorKey(salt, request);
   await db
@@ -99,8 +115,7 @@ function isPlay(url, request) {
   return request.method === "GET" && /^\/video\/[a-z0-9-]+\.mp4$/.test(url.pathname);
 }
 
-async function recordPlay(db, request, url, day, status) {
-  const t = Math.floor((Date.now() - Date.parse(day + "T00:00:00Z")) / 1000);
+async function recordPlay(db, request, url, day, t, status) {
   const salt = await daySalt(db, day);
   const visitor = await visitorKey(salt, request);
   await db
@@ -145,11 +160,12 @@ export async function onRequest(context) {
   const { request, env, next, waitUntil } = context;
   const url = new URL(request.url);
   const response = await next();
+  const { day, t } = dayAndSecond(Date.now());
 
   if (env.DB && isPageView(url, request)) {
     const ref = referrer(request, "wetvst.com");
     const row = [
-      new Date().toISOString().slice(0, 10), // UTC day
+      day,
       ref.host,
       ref.url,
       url.pathname,
@@ -168,12 +184,11 @@ export async function onRequest(context) {
         .run()
         .catch(() => {})
     );
-    waitUntil(recordVisit(env.DB, request, url, row, response.status).catch(() => {}));
+    waitUntil(recordVisit(env.DB, request, url, row, response.status, t).catch(() => {}));
   }
 
   if (env.DB && isPlay(url, request)) {
-    const day = new Date().toISOString().slice(0, 10);
-    waitUntil(recordPlay(env.DB, request, url, day, response.status).catch(() => {}));
+    waitUntil(recordPlay(env.DB, request, url, day, t, response.status).catch(() => {}));
   }
 
   return response;
