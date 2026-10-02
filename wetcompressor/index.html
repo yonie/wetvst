@@ -84,6 +84,20 @@
 
         <section class="pdp-section">
             <div class="container">
+                <h2>Video</h2>
+                <div class="pdp-media pdp-video"><video controls preload="none" poster="/video/wetcompressor-2.jpg"><source src="/video/wetcompressor-2.mp4" type="video/mp4"></video><button class="play" type="button" aria-label="Play the video"></button></div>
+                <script>
+                (function () {
+                  var box = document.currentScript.previousElementSibling, v = box.querySelector("video");
+                  box.querySelector(".play").addEventListener("click", function () { v.play(); });
+                  v.addEventListener("play", function () { box.classList.add("playing"); });
+                })();
+                </script>
+            </div>
+        </section>
+
+        <section class="pdp-section">
+            <div class="container">
                 <h2>Installation</h2>
                 <dl class="pdp-install">
                     <dt>Windows</dt>
